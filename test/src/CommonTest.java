@@ -244,7 +244,7 @@ public class CommonTest {
 
     @Test
     public void test022() {
-
+        System.out.println("test 2");
     }
 }
 
