@@ -239,7 +239,7 @@ public class CommonTest {
 
     @Test
     public void test021() {
-
+        System.out.println("test git remote");
     }
 
     @Test
