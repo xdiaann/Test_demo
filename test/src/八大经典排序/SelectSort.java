@@ -17,30 +17,30 @@ public class SelectSort {
      */
     //性质：1、时间复杂度：O(n2) 2、空间复杂度：O(1) 3、非稳定排序 4、原地排序
     public static void main(String[] args) {
-        int[] a = {3, 2, 1, 12, 3, 5, 57, 6, 4, 23, 4, 2, 6, 7,};
+//        int[] a = {3, 2, 1, 12, 3, 5, 57, 6, 4, 23, 4, 2, 6, 7};
+        int[] a = {3, 2, 1};
+//        System.out.println(Arrays.toString(selectSort(a)));
 
-        System.out.println(Arrays.toString(selectSort(a)));
         System.out.println(Arrays.toString(mySelectSort(a)));
     }
 
 
     private static int[] mySelectSort(int[] a) {
         int length = a.length;
-        for (int i = 0; i < length-1; i++) {//length-1 要与后一个比较
-
+        for (int i = 0; i < length - 1; i++) {//length-1 要与后一个比较
+            int min = i;
+            for (int j = i; j < length - 1; j++) {
+                //如果当前后一个小于前一个  则记录最小的是第几个
+                if (a[j] > a[j + 1]) {
+                    min = a[j + 1];
+                }
+            }
+            //交换
+            int temp = a[i] = min;//将最小的数给当前要交换的位置  第一次就是给第一位
+            System.out.println(min);
         }
-
-        return null;
+        return a;
     }
-
-
-
-
-
-
-
-
-
 
 
     private static int[] selectSort(int[] a) {

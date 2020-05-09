@@ -17,9 +17,17 @@ public class StreamTest {
         personList.add(new Person("mike", 25));
         personList.add(new Person("mike", 20));
         personList.add(new Person("tom", 30));
+//        personList.add(new Person(null, null));
+
+        System.out.println(personList);
+        System.out.println("==============================");
+        //这两种写法一样 lambda 方法引用
+//        personList.forEach(x-> System.out.println(x));
         personList.forEach(System.out::println);
-//        testFilter(personList);
-        testMap(personList);
+        System.out.println("==============================");
+        testFilter(personList);
+        System.out.println("==============================");
+//        testMap(personList);
     }
 
     private static void testFilter(List<Person> personList) {
@@ -28,7 +36,7 @@ public class StreamTest {
         //保留Name为 mike 的 person 元素
         personList1 = personList1.stream().filter(s -> "mike".equals(s.getName())).collect(Collectors.toList());
         System.out.println("personList1" + personList1);
-        personList1.forEach(x-> System.out.println(x.getName()));
+        personList1.forEach(x -> System.out.println(x.getName()));
         //下面这两种写法一样
 //        personList1.forEach(x-> System.out.println(x));
         personList1.forEach(System.out::println);
@@ -41,14 +49,14 @@ public class StreamTest {
 
     private static void testMap(List<Person> students) {
         //在地址前面加上部分信息，只获取地址输出
-        List<String> name = students.stream().map(s ->"name:"+s.getName()).collect(Collectors.toList());
+        List<String> name = students.stream().map(s -> "name:" + s.getName()).collect(Collectors.toList());
         name.forEach(System.out::println);
     }
 
     @Test
     public void testDistinct1() {
         //简单字符串的去重
-        List<String> list = Arrays.asList("111","222","333","111","222");
+        List<String> list = Arrays.asList("111", "222", "333", "111", "222");
         list.stream().distinct().forEach(System.out::println);
     }
 
@@ -64,7 +72,7 @@ public class StreamTest {
     @Test
     public void test11() {
         Random random = new Random();
-        random.ints().limit(10).forEach(System.out::println);
+        random.ints(0, 10).limit(100).forEach(System.out::println);
     }
 
     //map 方法用于映射每个元素到对应的结果，以下代码片段使用 map 输出了元素对应的平方数：
@@ -83,7 +91,7 @@ public class StreamTest {
     public void test13() {
         List<String> strings = Arrays.asList("abc", "", "bc", "efg", "abcd", "", "jkl");
         // 获取空字符串的数量
-        long count = strings.stream().filter(string -> string.isEmpty()).count();
+        long count = strings.stream().filter(String::isEmpty).count();
         System.out.println(count);//2
     }
 }

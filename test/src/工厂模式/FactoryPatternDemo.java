@@ -28,6 +28,7 @@ public class FactoryPatternDemo {
         //调用 Square 的 draw 方法
         shape3.draw();
 
-        System.out.println("\t d");
+        Shape shape4 = new Circle();
+        shape4.draw();
     }
 }
