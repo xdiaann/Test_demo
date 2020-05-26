@@ -18,28 +18,36 @@ public class StreamTest {
         personList.add(new Person("mike", 20));
         personList.add(new Person("tom", 30));
 //        personList.add(new Person(null, null));
-
-        System.out.println(personList);
+//        System.out.println(personList);
         System.out.println("==============================");
         //这两种写法一样 lambda 方法引用
 //        personList.forEach(x-> System.out.println(x));
-        personList.forEach(System.out::println);
+//        personList.forEach(System.out::println);
         System.out.println("==============================");
         testFilter(personList);
         System.out.println("==============================");
-//        testMap(personList);
+        testMap(personList);
     }
 
     private static void testFilter(List<Person> personList) {
 
         List<Person> personList1 = personList;
+        personList1.stream().filter(person -> "jack".equals(person.getName()));
+        System.out.println("personList1filterjack" + personList1);
         //保留Name为 mike 的 person 元素
-        personList1 = personList1.stream().filter(s -> "mike".equals(s.getName())).collect(Collectors.toList());
+        personList1 = personList1.stream().filter(s -> "mike".equals(s.getName())).collect(toList());
         System.out.println("personList1" + personList1);
-        personList1.forEach(x -> System.out.println(x.getName()));
+        personList1.forEach(x -> System.out.println(x.getName()));//mike mike
+//        personList1.forEach(x -> x.setName("1"));//mike mike
+//        personList1.forEach(x -> {
+//            x.setName("1");
+//            System.out.println(x.getName());
+//        });
+        System.out.println("==============================");
         //下面这两种写法一样
 //        personList1.forEach(x-> System.out.println(x));
         personList1.forEach(System.out::println);
+        System.out.println("==============================");
         //保留年龄为 20 的 person 元素
         personList = personList.stream().filter(person -> person.getAge() == 20).collect(toList());
         System.out.println("personList" + personList);
@@ -51,6 +59,7 @@ public class StreamTest {
         //在地址前面加上部分信息，只获取地址输出
         List<String> name = students.stream().map(s -> "name:" + s.getName()).collect(Collectors.toList());
         name.forEach(System.out::println);
+
     }
 
     @Test

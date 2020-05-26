@@ -1,5 +1,6 @@
 import org.junit.Test;
 
+import javax.xml.bind.SchemaOutputResolver;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
@@ -73,6 +74,25 @@ public class CommonTest {
         String b = "1.0.3";
         int i = a.compareTo(b);
         System.out.println(i);
+    }
+    //为什么会得到这样的一个结果呢？我们一步一步的分析。
+    //
+    // 第一、str5.equals(str3)这个结果为true，不用太多的解释，因为字符串的值的内容相同。
+    // 第二、str5 == str3对比的是引用的地址是否相同，由于str5采用new String方式定义的，所以地址引用一定不相等。所以结果为false。
+    // 第三、当str5调用intern的时候，会检查字符串池中是否含有该字符串。由于之前定义的str3已经进入字符串池中，所以会得到相同的引用。
+    // 第四，当str4 = str1 + str2后，str4的值也为”ab”，但是为什么这个结果会是false呢？
+    @Test
+    public void test4_1() {
+        String str1 = "a";
+        String str2 = "b";
+        String str3 = "ab";
+        String str4 = str1 + str2;
+        String str5 = new String("ab");
+
+        System.out.println(str5.equals(str3));//true
+        System.out.println(str5 == str3);//false
+        System.out.println(str5.intern() == str3);//true
+        System.out.println(str5.intern() == str4);;//false
     }
 
     @Test
@@ -387,7 +407,10 @@ public class CommonTest {
             map.put("三鸟", -2);
             map.put("四鸟", null);
             map.put("五鸟", 0);
-
+            map.put(null, 0);
+            map.put(null, 1);//覆盖之前的null
+            System.out.println(map);
+            System.out.println("================");
             Set<Map.Entry<String, Integer>> entrySet = map.entrySet();
             System.out.println(entrySet);
             for (Map.Entry s : entrySet) {

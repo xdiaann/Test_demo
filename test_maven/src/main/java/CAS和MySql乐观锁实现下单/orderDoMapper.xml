@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CAS和MySql乐观锁实现下单.OrderDoMapper" >
+
+    <update id="selectByPrimaryKey">
+        select * from t_order where id=#{id}
+    </update>
+    <update id="desStockByCas">
+        UPDATE t_order SET stock=#{newStock} WHERE id=#{orderId} AND stock=#{oldStock}
+    </update>
+    <update id="desStockByOptimistic">
+        UPDATE t_order SET stock=stock-#{desStock}, version=version+1
+        WHERE id=#{orderId} AND version=#{oldVersion}
+    </update>
+    <update id="desStockByLarge">
+        UPDATE t_order SET stock=stock-#{desStock} WHERE id=#{orderId} and stock-#{desStock}>=0
+    </update>
+</mapper>
