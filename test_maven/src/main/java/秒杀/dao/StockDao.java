@@ -1,4 +1,4 @@
-package dao;
+package 秒杀.dao;
 
 import 秒杀.Stock;
 import org.apache.ibatis.annotations.Param;

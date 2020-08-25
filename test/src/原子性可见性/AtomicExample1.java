@@ -1,6 +1,4 @@
-package 原子性;
-
-import lombok.extern.slf4j.Slf4j;
+package 原子性可见性;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
@@ -12,7 +10,6 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author MR.Z
  * @date 2020/4/26 16:10
  */
-@Slf4j
 public class AtomicExample1 {
 
     // 请求总数
@@ -34,14 +31,14 @@ public class AtomicExample1 {
                     add();
                     semaphore.release();
                 } catch (Exception e) {
-                    log.error("exception", e);
+                    System.out.println(e);
                 }
                 countDownLatch.countDown();
             });
         }
         countDownLatch.await();
         executorService.shutdown();
-        log.info("count:{}", count.get());
+        System.out.println("count:"+count.get());
     }
 
     private static void add() {

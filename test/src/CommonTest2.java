@@ -70,11 +70,51 @@ public class CommonTest2 {
     @Test
     public void test06() {
 
+        getDateList("日", "202001", "202003");
+
+    }
+
+    private void getDateList(String timeType, String startTime, String endTime) {
+        SimpleDateFormat sdfD = null;
+        if (timeType.equals("小时")) {
+            sdfD = new SimpleDateFormat("yyyy-MM-dd HH");
+        }
+        Calendar c = Calendar.getInstance();
+        List<String> xAils = new ArrayList<>();
+        try {
+            Date sd = sdfD.parse(startTime);
+            Date ed = sdfD.parse(endTime);
+            c.setTime(sd);
+            while (c.getTime().before(ed) || c.getTime().equals(ed)) {
+                String format = sdfD.format(c.getTime());
+
+                if (timeType.equals("yyyyMMddHH") || timeType.equals("yyyy-MM-dd HH")) {
+                    c.add(Calendar.HOUR_OF_DAY, 1);
+                } else if (timeType.equals("yyyyMMdd") || timeType.equals("yyyy-MM-dd")) {
+                    c.add(Calendar.DAY_OF_MONTH, 1);
+                } else if (timeType.equals("yyyyMM") || timeType.equals("yyyy-MM")) {
+                    c.add(Calendar.MONTH, 1);
+                } else if (timeType.equals("yyyy")) {
+                    c.add(Calendar.MONTH, 1);
+                } else {
+                    throw new RuntimeException("暂不支持的时间格式");
+                }
+                xAils.add(format);
+            }
+        } catch (ParseException e) {
+            throw new RuntimeException("日期格式解析错误");
+        }
+        System.out.println(xAils);
     }
 
     @Test
     public void test07() {
-
+        System.out.println(16*22.5);
+        List<Double> list = new ArrayList<>();
+        for (int i = 0; i < 16; i++) {
+            list.add(i * 22.5);
+        }
+        System.out.println(list);
     }
 
     @Test
@@ -90,15 +130,76 @@ public class CommonTest2 {
     }
 
     @Test
-    public void test09() throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String eTime = sdf.format(new Date());
-        String sTime = DateUtil.addMin(sdf.parse(eTime), -30, "yyyy-MM-dd HH:mm:ss");
-        System.out.println(sTime+" "    +eTime);
+    public void test09() {
 
-        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        Date parse = sdf1.parse("2020/02/02 3:00:00");
-        System.out.println(parse);
+    }
+
+    @Test
+    public void test10()  {
+        Object a = null;
+        String s = (String) (a);
+        System.out.println(s);
+//        Double aDouble = Double.valueOf(s);
+
+        Object b = 1.2;
+        Object c = 0.5;
+        double v = (Double) b / (Double) c;
+        System.out.println(v);
+
+
+    }
+    @Test
+    public void test11()  {
+        Date date = new Date();
+        String s = date.toString();
+        System.out.println(date);
+        System.out.println(s);
+    }
+
+    @Test
+    public void test12()  {
+        int i = 1;
+        i = i++;  //i-> 1
+        int j = i++; //i->2  j=1
+        int k = i + ++i * i++;//2+3*3
+        System.out.println(i);//4
+        System.out.println(j);//1
+        System.out.println(k);//8
+
+    }
+    @Test
+    public void test13()  {
+        int i = 1;
+        int j = i + ++i * i++;//1+2*2
+        System.out.println(i);
+        System.out.println(j);
+
+    }
+    @Test
+    public void test14()  {
+        int a = 9;
+        int b = 8;
+        int c = 8;
+        int d = 9;
+        System.out.println(a%b);
+        System.out.println(a&b);
+
+        System.out.println(c%d);
+        System.out.println(c&d);
+    }
+
+
+
+    @Test
+    public void test15()  {
+
+    }
+    @Test
+    public void test16()  {
+
+    }
+    @Test
+    public void test17()  {
 
     }
 

@@ -1,6 +1,6 @@
 package 秒杀.service.impl;
 
-import dao.StockDao;
+import 秒杀.dao.StockDao;
 import 秒杀.Stock;
 import org.springframework.stereotype.Service;
 import 秒杀.service.StockService;

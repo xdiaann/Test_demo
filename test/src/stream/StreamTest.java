@@ -17,6 +17,12 @@ public class StreamTest {
         personList.add(new Person("mike", 25));
         personList.add(new Person("mike", 20));
         personList.add(new Person("tom", 30));
+
+        List<Person> personList2 = new ArrayList<>();
+        personList2.add(new Person("jack", 20));
+        personList2.add(new Person("mike", 25));
+        personList2.add(new Person("mike", 20));
+        personList2.add(new Person("tom", 30));
 //        personList.add(new Person(null, null));
 //        System.out.println(personList);
         System.out.println("==============================");
@@ -24,9 +30,17 @@ public class StreamTest {
 //        personList.forEach(x-> System.out.println(x));
 //        personList.forEach(System.out::println);
         System.out.println("==============================");
-        testFilter(personList);
+        testFilter(personList2);
         System.out.println("==============================");
-        testMap(personList);
+        testMap(personList2);
+        System.out.println("==============================");
+        testFilter1(personList, personList2);
+
+    }
+
+    private static void testFilter1(List<Person> students,List<Person> students1) {
+//        students.stream().filter(o1->)
+
     }
 
     private static void testFilter(List<Person> personList) {
@@ -53,13 +67,13 @@ public class StreamTest {
         System.out.println("personList" + personList);
         personList.forEach(System.out::println);
 
+
     }
 
     private static void testMap(List<Person> students) {
         //在地址前面加上部分信息，只获取地址输出
         List<String> name = students.stream().map(s -> "name:" + s.getName()).collect(Collectors.toList());
         name.forEach(System.out::println);
-
     }
 
     @Test

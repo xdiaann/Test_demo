@@ -1,8 +1,8 @@
 import org.junit.Test;
 
-import javax.xml.bind.SchemaOutputResolver;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.net.URLDecoder;
 import java.text.NumberFormat;
@@ -271,75 +271,24 @@ public class CommonTest {
     }
 
     @Test
-    public void test021() {
+    public void test021() throws Exception {
+        /** 注意：泛型和集合都只能支持引用数据类型。若要存储基本数据类型的数据，应该选择用包装类。 */
+        // List<int> lists = new ArrayList<>();
+        List<Integer> lists = new ArrayList<>();
+        lists.add(12);
+//        lists.add(true);
+        // Java是一个很优美严谨的语言
 
-    }
-
-    public static void main(String[] args) {
-//        String resident = "[[\"00\",null,null,null,null,null,null,null,null,null,null],[\"SFHM\",\"XM\",\"X
-//        B\",\"MZ\",\"CSRQ\",\"ZZXZ\",\"HH\",\"HLX\",\"GLZT\",\"FWCS\",\"SSPCSJGDM\"]]";
-        String resident = "[[\"00\",null,null,null,null,null,null,null,null,null,null],[\"SFHM\",\"XM\",\"XB\"" +
-                ",\"MZ\",\"CSRQ\",\"ZZXZ\",\"HH\",\"HLX\",\"GLZT\",\"FWCS\",\"SSPCSJGDM\"],[\"432502199303162318\",\"王琦\",\"1\",\"01\",\"19930316\",\"长沙市芙蓉区芙蓉社区人民东路189号芙蓉区人才交流中心\",\"4301021516735897\",\"3\",\"1\",\"43010201156474\",\"430102450000\"]]";
-        String[] split = resident.split("]");
-        System.out.println(split.length - 2);
-        //方法1；定义并初始化arr
-        int[][] arr = new int[3][4];
-        arr[0][1] = 1;
-        arr[0][2] = 2;
-        arr[1][2] = 3;
-        arr[1][1] = 4;
-        arr[2][3] = 8;
-        //遍历arr
-        for (int i = 0; i < arr.length; i++) {
-            for (int j = 0; j < arr[i].length; j++) {
-                System.out.println("arr[" + i + "][" + j + "]=" + arr[i][j]);
-            }
-        }
-        System.out.println("====================================");
-        //方法二: 定义并初始化str ；
-        String[][] str1 = new String[][]{{"a", "b", "c",}, {"d", "e", "f",}, {"g", "h", "i"}};
-        //方法三: 定义并初始化str ；
-        String[][] str = {{"a", "b", "c",}, {"d", "e", "f",}, {"g", "h", "i"}};
-
-        //遍历str方法1:利用两层for循环。
-        for (int i = 0; i < str.length; i++) {//i控制一维数组。
-            for (int j = 0; j < str[i].length; j++) {//j遍历每个一维数组的元素
-                System.out.println(" str[" + i + "][" + j + "]=" + str[i][j]);
-            }
-        }
-
-        //遍历str方法2:利用foreach循环。
-        //for each不能自动处理二维数组的每一个元素，它是按照行处理。就是按照一维数组处理的。所以要访问二维数组
-        //必须使用两个嵌套的循环。
-        for (String[] row : str) {
-            for (String s : row) {
-                System.out.println(s);
-            }
-        }
-        //遍历str方法3:想要快速地打印一个二维数组的数据元素列表，可以直接调用
-        System.out.println(Arrays.deepToString(str));
-    }
-
-
-    @Test
-    public void test022() {
-//                String resident = "[[\"00\",null,null,null,null,null,null,null,null,null,null],[\"SFHM\",\"XM\",\"XB\",\"MZ\",\"CSRQ\",\"ZZXZ\",\"HH\",\"HLX\",\"GLZT\",\"FWCS\",\"SSPCSJGDM\"]]";
-        String resident = "[[\"00\",null,null,null,null,null,null,null,null,null,null],[\"SFHM\",\"XM\",\"XB\"" +
-                ",\"MZ\",\"CSRQ\",\"ZZXZ\",\"HH\",\"HLX\",\"GLZT\",\"FWCS\",\"SSPCSJGDM\"],[\"432502199303162318\",\"王琦\",\"1\",\"01\",\"19930316\",\"长沙市芙蓉区芙蓉社区人民东路189号芙蓉区人才交流中心\",\"4301021516735897\",\"3\",\"1\",\"43010201156474\",\"430102450000\"]]";
-        String[] split = resident.split("]");
-        System.out.println("分几组: " + split.length);
-//        for (String s : split) {
-//            System.out.println("每组的数组分别是: "+s);
-//        }
-
-        for (int i1 = 0; i1 < split.length; i1++) {
-            if (i1 == 0) {
-                String substring = split[i1].substring(1, split[i1].length());
-                System.out.println(substring);
-                String s = substring + "]";
-                System.out.println(s);
-            }
-        }
+        /** 使用反射技术强制性加入一个新的其他类型的元素进去
+         *  暴力的在运行时加入一个其他类型的元素。
+         */
+        Class<?> clazz = lists.getClass();
+        // 定位添加元素的add方法
+        Method add =  clazz.getDeclaredMethod("add",Object.class);
+        add.invoke(lists,true);
+        add.invoke(lists,99.9);
+        add.invoke(lists,"Java");
+        System.out.println(lists);
     }
 
 

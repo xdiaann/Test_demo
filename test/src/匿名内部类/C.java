@@ -19,7 +19,7 @@ class C {
     }
 }
 
-class niMing {
+class NiMing {
     public static void main(String[] args) {
         //创建对象访问对应内部类函数成员
         C c = new C();

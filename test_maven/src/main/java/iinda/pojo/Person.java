@@ -19,4 +19,6 @@ public class Person extends BaseDto{
     private String phone;
     @Validate(nullable=false)
     private String address;
+
+
 }

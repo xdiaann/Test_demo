@@ -11,7 +11,7 @@ import javax.validation.ConstraintValidatorContext;
  */
 public class IsFormatValidator implements ConstraintValidator<IsFormat, Object>{
 
-    private int Valuelength;
+    private int valueLength;
     @Override
     public boolean isValid(Object IdNumber, ConstraintValidatorContext constraintValidatorContext) {
         String message=constraintValidatorContext.getDefaultConstraintMessageTemplate();
@@ -21,10 +21,10 @@ public class IsFormatValidator implements ConstraintValidator<IsFormat, Object>{
                     .buildConstraintViolationWithTemplate(message+"不能为空").addConstraintViolation();
             return false;
         }
-        if(IdNumber.toString().length()>Valuelength){
+        if(IdNumber.toString().length()>valueLength){
             constraintValidatorContext.disableDefaultConstraintViolation();//禁用默认的message的值
             constraintValidatorContext
-                    .buildConstraintViolationWithTemplate(message+"长度不能超过"+Valuelength+"位").addConstraintViolation();
+                    .buildConstraintViolationWithTemplate(message+"长度不能超过"+valueLength+"位").addConstraintViolation();
             return false;
         }
         return true;
@@ -33,7 +33,7 @@ public class IsFormatValidator implements ConstraintValidator<IsFormat, Object>{
 
     @Override
     public void initialize(IsFormat constraintAnnotation) {
-        Valuelength=constraintAnnotation.length();
+        valueLength=constraintAnnotation.length();
     }
 
 

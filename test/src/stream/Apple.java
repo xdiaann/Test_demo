@@ -10,14 +10,16 @@ import lombok.Data;
 public class Apple {
 
     int i = 0;
+    String abc = null;
 
-    Apple eatApple(){
+    Apple eatApple() {
         i++;
         return this;
     }
 
     public static void main(String[] args) {
         Apple apple = new Apple();
+        System.out.println(apple);
         System.out.println(apple.eatApple().eatApple().toString());
     }
 }
