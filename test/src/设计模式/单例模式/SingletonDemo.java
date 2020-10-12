@@ -13,7 +13,7 @@ public class SingletonDemo {
     }
 
     //如果不加synchronized 则在多线程情况下会生成多个 但是不全面 方法锁
-    public  static synchronized   SingletonDemo getInstance() {
+    public  static synchronized SingletonDemo getInstance() {
         if (instance == null) {
              instance = new SingletonDemo();
         }

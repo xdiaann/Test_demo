@@ -15,6 +15,6 @@ public class Singleton_EH {
     public static final Singleton_EH INSTANCE = new Singleton_EH();
 
     private Singleton_EH() {
-
+        System.out.println("Singleton_EH构造方法执行啦...");
     }
 }

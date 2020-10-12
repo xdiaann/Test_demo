@@ -1,7 +1,7 @@
-package 临时;
+package ReentrantLock;
 
 
-public class SyncThreadTest {
+public class BankSyncThreadTest {
 
     public static void main(String args[]) {
         Bank bank = new Bank();

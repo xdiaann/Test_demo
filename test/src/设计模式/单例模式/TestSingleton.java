@@ -23,7 +23,6 @@ public class TestSingleton {
         Callable<Singleton_LH> callable = new Callable<Singleton_LH>() {
             @Override
             public Singleton_LH call() throws Exception {
-
                 return Singleton_LH.getInstance();
             }
         };
@@ -32,6 +31,7 @@ public class TestSingleton {
         Future<Singleton_LH> submit1 = executorService.submit(callable);
         Singleton_LH singleton_lh3 = submit.get();
         Singleton_LH singleton_lh4 = submit1.get();
+
         System.out.println(singleton_lh3==singleton_lh1);
         System.out.println(singleton_lh4);
         System.out.println(singleton_lh1);

@@ -8,14 +8,14 @@ public class TestArguments {
     public static void main(String[] args) {
         //调用noSmoking方法，传递实现类对象
         //实现类对象时自己的对象
-        Student s = new Student();
+//        Student s = new Student();
+//        noSmoking(s);
+
+//        noSmoking(new Student());
+//
+//        //实现类对象，是采用多态创建出来的
+        Smoking s = new Student();
         noSmoking(s);
-
-        noSmoking(new Student());
-
-        //实现类对象，是采用多态创建出来的
-        Smoking t = new Student();
-        noSmoking(t);
     }
 
     /*

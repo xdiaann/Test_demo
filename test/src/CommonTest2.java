@@ -2,6 +2,7 @@ import org.junit.Test;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.*;
 
 /**
@@ -109,7 +110,7 @@ public class CommonTest2 {
 
     @Test
     public void test07() {
-        System.out.println(16*22.5);
+        System.out.println(16 * 22.5);
         List<Double> list = new ArrayList<>();
         for (int i = 0; i < 16; i++) {
             list.add(i * 22.5);
@@ -135,7 +136,7 @@ public class CommonTest2 {
     }
 
     @Test
-    public void test10()  {
+    public void test10() {
         Object a = null;
         String s = (String) (a);
         System.out.println(s);
@@ -148,8 +149,9 @@ public class CommonTest2 {
 
 
     }
+
     @Test
-    public void test11()  {
+    public void test11() {
         Date date = new Date();
         String s = date.toString();
         System.out.println(date);
@@ -157,7 +159,7 @@ public class CommonTest2 {
     }
 
     @Test
-    public void test12()  {
+    public void test12() {
         int i = 1;
         i = i++;  //i-> 1
         int j = i++; //i->2  j=1
@@ -167,41 +169,94 @@ public class CommonTest2 {
         System.out.println(k);//8
 
     }
+
     @Test
-    public void test13()  {
+    public void test13() {
         int i = 1;
         int j = i + ++i * i++;//1+2*2
         System.out.println(i);
         System.out.println(j);
 
     }
+
     @Test
-    public void test14()  {
+    public void test14() {
         int a = 9;
         int b = 8;
         int c = 8;
         int d = 9;
-        System.out.println(a%b);
-        System.out.println(a&b);
+        System.out.println(a % b);
+        System.out.println(a & b);
 
-        System.out.println(c%d);
-        System.out.println(c&d);
+        System.out.println(c % d);
+        System.out.println(c & d);
     }
 
 
+    public static int dayOfYearByDateFormat(int year, int month, int day) {
+        SimpleDateFormat sdf = new SimpleDateFormat("DDD");
+        return Integer.parseInt(sdf.format(new Date(year, month - 1, day)));
+    }
+
+    public static int dayOfYearByCalendar(int year, int month, int day) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month - 1, day);
+        return calendar.get(Calendar.DAY_OF_YEAR);
+    }
+
+    public static int dayOfYearByLocalDate(int year, int month, int day) {
+        LocalDate date = LocalDate.of(year, month, day);
+        return date.getDayOfYear();
+    }
 
     @Test
-    public void test15()  {
-
+    public void test15() {
+        int i = dayOfYearByDateFormat(2020, 9, 24);
+        int i1 = dayOfYearByCalendar(2020, 9, 24);
+        int i2 = dayOfYearByLocalDate(2020, 9, 24);
+        System.out.println(i);
+        System.out.println(i1);
+        System.out.println(i2);
     }
+
     @Test
-    public void test16()  {
+    public void test16() {
+
 
     }
+
+    public static void main(String[] args) {
+        //会导致ConcurrentModificationException
+//        List<String> list = new ArrayList<>();
+//
+//        for (int i = 0; i < 30; i++) {
+//            new Thread(() -> {
+//                list.add(UUID.randomUUID().toString().substring(0, 8));
+//                System.out.println(Thread.currentThread().getName()+"\t"+list);
+//            }, String.valueOf(i)).start();
+//        }
+        //解决方案1 vector
+//        List<String> list1 = new Vector<>();
+//
+//        for (int i = 0; i < 30; i++) {
+//            new Thread(() -> {
+//                list1.add(UUID.randomUUID().toString().substring(0, 8));
+//                System.out.println(Thread.currentThread().getName()+"\t"+list1);
+//            }, String.valueOf(i)).start();
+//        }
+        //解决方案2 Collections.synchronizedList(new ArrayList<>())
+        List<String> list2 = Collections.synchronizedList(new ArrayList<>());
+        for (int i = 0; i < 30; i++) {
+            new Thread(() -> {
+                list2.add(UUID.randomUUID().toString().substring(0, 8));
+                System.out.println(Thread.currentThread().getName()+"\t"+list2);
+            }, String.valueOf(i)).start();
+        }
+    }
+
     @Test
-    public void test17()  {
+    public void test17() {
 
     }
-
 
 }
