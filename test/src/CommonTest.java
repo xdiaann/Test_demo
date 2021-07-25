@@ -1,3 +1,4 @@
+import org.junit.Before;
 import org.junit.Test;
 
 import java.io.*;
@@ -10,6 +11,7 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @description:
@@ -230,9 +232,13 @@ public class CommonTest {
         list.add(1);
         list.add("a");
         list.add(11);
-        System.out.println(list);
+//        System.out.println(list);
+        for (Integer i = -1; i < list.size(); i++) {
+            System.out.println(i);
+//            System.out.println(list.get(i+1));
+        }
         list = new LinkedList(list);
-        System.out.println(list);
+//        System.out.println(list);
 
         ArrayList<String> list1 = new ArrayList<String>();
         List<String> list2 = new ArrayList<>();
@@ -661,7 +667,6 @@ public class CommonTest {
         map1.put("cj", "5");
         map1.put("1", "3");
         map1.put("2", "4");
-        System.out.println(map1);
         Map<String, Object> map2 = new HashMap<String, Object>();
         map2.put("name", "h");
         map2.put("cj", "12");
@@ -672,15 +677,20 @@ public class CommonTest {
         list.add(map3);
         list.add(map2);
         //排序前
+        System.out.println("排序前");
         for (Map<String, Object> map : list) {
             System.out.println(map.get("cj"));
         }
-        Collections.sort(list, new Comparator<Map<String, Object>>() {
-            public int compare(Map<String, Object> o1, Map<String, Object> o2) {
-                Integer name1 = Integer.valueOf(o1.get("cj").toString());//name1是从你list里面拿出来的一个
-                Integer name2 = Integer.valueOf(o2.get("cj").toString()); //name1是从你list里面拿出来的第二个name
-                return name1.compareTo(name2);
-            }
+
+        list.sort(Comparator.comparing(o -> (Integer.valueOf (o.get("cj").toString()))));
+        System.out.println(list);
+        for (Map<String, Object> map : list) {
+            System.out.println(map.get("cj"));
+        }
+        Collections.sort(list, (o1, o2) -> {
+            Integer name1 = Integer.valueOf(o1.get("cj").toString());//name1是从你list里面拿出来的一个
+            Integer name2 = Integer.valueOf(o2.get("cj").toString()); //name1是从你list里面拿出来的第二个name
+            return name1.compareTo(name2);
         });
         //List<Map>排序后
         System.out.println("List<Map>排序后-------------------");
@@ -694,19 +704,9 @@ public class CommonTest {
         listArray.add(map2);
         Map[] maps = new Map[listArray.size()];
         listArray.toArray(maps);
-        Arrays.sort(maps, new Comparator<Map>() {
-            public int compare(Map o1, Map o2) {
-                Integer name1 = Integer.valueOf(o1.get("cj").toString());//name1是从你list里面拿出来的一个
-                Integer name2 = Integer.valueOf(o2.get("cj").toString()); //name2是从你list里面拿出来的第二个name
-                return name1.compareTo(name2);
-            }
-        });
-        //lambda表达式
         Arrays.sort(maps, (o1, o2) -> {
-            Integer name1 = Integer.valueOf(o1.get("cj").toString());
-            //name1是从你list里面拿出来的一个
-            Integer name2 = Integer.valueOf(o2.get("cj").toString());
-            //name2是从你list里面拿出来的第二个name
+            Integer name1 = Integer.valueOf(o1.get("cj").toString());//name1是从你list里面拿出来的一个
+            Integer name2 = Integer.valueOf(o2.get("cj").toString()); //name2是从你list里面拿出来的第二个name
             return name1.compareTo(name2);
         });
         //数组排序后
@@ -869,8 +869,67 @@ public class CommonTest {
     }
     @Test
     public void test041()  {
+        double a = 0.1;
+        double b = 0.2;
+        System.out.println(a+b);
+
+//        boolean b1 = 3 * 0.1 == 0.3;
+//        if (b1) {
+//            System.out.println(1);
+//        }
 
     }
+    @Test
+    public void test042()  {
+        Map<String, String> dataMap = new HashMap<>();
+        dataMap.put("baseUrl", "http://www.aipeixun360.com:8888");
+        dataMap.put("baseAppUrl", "http://www.aipeixun360.com:8092");
+        String templateStr = "<p><a href=\"#baseAppUrl#/#/Course/#id#?close=true\" target=\"_blank\" style=\"background-color: rgb(255, 255, 255);\">您好，学习平台发布了#name#课程，欢迎参与学习！</a></p>";
+        for (Map.Entry<String, String> entry : dataMap.entrySet()) {
+            String replaceKey = String.format("#%s#", entry.getKey());
+            if(Objects.nonNull(entry.getValue())){
+                templateStr = templateStr.replaceAll(replaceKey, entry.getValue());
+                System.out.println(templateStr);
+            }
+        }
+    }
+    @Test
+    public void test043() throws ParseException {
+//        String a = "2021-06-30 00:00:00";
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        Date parse = sdf.parse(a);
+//        boolean before = new Date().before(parse);
+//        System.out.println(before);
+//
+//        List list = new ArrayList();
+//        list.get(0);
+//        System.out.println(null==list);
+        long l = new BigDecimal(1).add(new BigDecimal(1)).longValue();
+        long l1 = new BigDecimal(1).add(BigDecimal.valueOf(1)).longValue();
+        System.out.println(l);
+        System.out.println(l1);
+
+    }
+    @Test
+    public void test044()  {
+
+
+    }
+    @Test
+    public void test045()  {
+
+    }
+    @Test
+    public void test046()  {
+
+    }
+    @Test
+    public void test047()  {
+
+    }
+
+
+
 
 
 }

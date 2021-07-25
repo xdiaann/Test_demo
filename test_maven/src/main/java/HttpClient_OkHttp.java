@@ -45,9 +45,9 @@ public class HttpClient_OkHttp {
         String api = "/api/user";
         String url = String.format("%s%s", BASE_URL, api);
         HttpPost httpPost = new HttpPost(url);
-        CommonTest.UserVO userVO = CommonTest.UserVO.builder().name("h2t2").build();
+//        CommonTest.UserVO userVO = CommonTest.UserVO.builder().name("h2t2").build();
         httpPost.setHeader("Content-Type", "application/json;charset=utf8");
-        httpPost.setEntity(new StringEntity(JSONObject.toJSONString(userVO), "UTF-8"));
+//        httpPost.setEntity(new StringEntity(JSONObject.toJSONString(userVO), "UTF-8"));
         CloseableHttpResponse response = httpClient.execute(httpPost);
         System.out.println(EntityUtils.toString(response.getEntity()));
     }
@@ -73,9 +73,9 @@ public class HttpClient_OkHttp {
         String api = "/api/user";
         String url = String.format("%s%s", BASE_URL, api);
         HttpPut httpPut = new HttpPut(url);
-        CommonTest.UserVO userVO = CommonTest.UserVO.builder().name("h2t").id(16L).build();
+//        CommonTest.UserVO userVO = CommonTest.UserVO.builder().name("h2t").id(16L).build();
         httpPut.setHeader("Content-Type", "application/json;charset=utf8");
-        httpPut.setEntity(new StringEntity(JSONObject.toJSONString(userVO), "UTF-8"));
+//        httpPut.setEntity(new StringEntity(JSONObject.toJSONString(userVO), "UTF-8"));
         CloseableHttpResponse response = httpClient.execute(httpPut);
         System.out.println(EntityUtils.toString(response.getEntity()));
     }
