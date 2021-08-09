@@ -1,5 +1,6 @@
 import org.junit.Before;
 import org.junit.Test;
+import 深浅克隆.浅克隆.Person;
 
 import java.io.*;
 import java.lang.reflect.Method;
@@ -22,40 +23,40 @@ public class CommonTest {
 
     //传值
     @Test
-    public void test1() {
+    public void testChangeInt() {
         int i = 1;
         System.out.println("before change, i = " + i);//1
-        change(i);
+        changeInt(i);
         System.out.println("after  change, i = " + i);//1
     }
 
-    public static void change(int i) {
+    public static void changeInt(int i) {
         i = 5;
         System.out.println("in the change, i = " + i);//5
     }
 
     @Test
-    public void test1_1() {
+    public void testChangeString() {
         String i = "Hello";
         System.out.println("before change, i = " + i);//1
-        change1_1(i);
+        changeString(i);
         System.out.println("after  change, i = " + i);//1
     }
 
-    public static void change1_1(String i) {
+    public static void changeString(String i) {
         i += "World";
         System.out.println("in the change, i = " + i);//5
     }
 
     @Test
-    public void test2() {
+    public void testChangeStringBuffer() {
         StringBuffer sb = new StringBuffer("Hello ");
         System.out.println("before change, sb is " + sb.toString());//Hello
-        change1(sb);
+        changeStringBuffer(sb);
         System.out.println("after change, sb is " + sb.toString());//Hello world !
     }
 
-    public static void change1(StringBuffer stringBuffer) {
+    public static void changeStringBuffer(StringBuffer stringBuffer) {
         stringBuffer.append("world !");
         System.out.println("in the change, stringBuffer = " + stringBuffer);//Hello  world !
     }
@@ -895,11 +896,11 @@ public class CommonTest {
     }
     @Test
     public void test043() throws ParseException {
-//        String a = "2021-06-30 00:00:00";
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        Date parse = sdf.parse(a);
-//        boolean before = new Date().before(parse);
-//        System.out.println(before);
+        String a = "2021-06-30 00:00:00";
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date parse = sdf.parse(a);
+        boolean before = new Date().before(parse);
+        System.out.println(before);
 //
 //        List list = new ArrayList();
 //        list.get(0);
@@ -911,20 +912,73 @@ public class CommonTest {
 
     }
     @Test
-    public void test044()  {
+    public void test044() throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
+        Date parse = simpleDateFormat.parse("20210730");
+        System.out.println(parse);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(parse);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        Date yesterday = calendar.getTime();
+        System.out.println(yesterday);
+        Calendar ca = Calendar.getInstance();
 
+        ca.setTime(parse);
 
+        ca.add(Calendar.DAY_OF_YEAR, -1);
+        System.out.println(ca.getTime());
     }
     @Test
     public void test045()  {
-
+        int i = new BigDecimal(0).compareTo(BigDecimal.ONE);
+        System.out.println(i);
     }
     @Test
     public void test046()  {
-
+        Integer a = null;
+        if (a > 0) {
+            System.out.println(1);
+        }
     }
     @Test
     public void test047()  {
+        BigDecimal a =new BigDecimal(0.1);
+        BigDecimal b =new BigDecimal(0.2);
+        int result = a.compareTo(b);
+//        result = -1;//表示a小于b
+//        result = 0;//表示a等于b;
+//        result = 1;//表示a大于b;
+        System.out.println(result);
+    }
+    @Test
+    public void test048()  {
+        LmsConsts.QuestionType[] types
+                = new LmsConsts.QuestionType[]{LmsConsts.QuestionType.SINGLE
+                ,LmsConsts.QuestionType.MULTISELECT
+                ,LmsConsts.QuestionType.MULTI
+                ,LmsConsts.QuestionType.JUDGE
+                ,LmsConsts.QuestionType.FILL
+                ,LmsConsts.QuestionType.QUESTION};
+
+        Map<LmsConsts.QuestionType, List<Person>> map = new LinkedHashMap<>();
+        List<Person> a = new ArrayList<>();
+        a.add(new Person("1", 1, "1", "1"));
+        a.add(new Person("2", 2, "2", "2"));
+        a.add(new Person("3", 3, "3", "3"));
+        map.put(LmsConsts.QuestionType.SINGLE,a);
+
+
+        Map<LmsConsts.QuestionType, List<Person>> map1 = new LinkedHashMap<>();
+        List<Person> a1 = new ArrayList<>();
+        a1.add(new Person("3", 1, "1", "1"));
+        a1.add(new Person("2", 2, "2", "2"));
+        a1.add(new Person("1", 3, "3", "3"));
+        map1.put(LmsConsts.QuestionType.SINGLE, a1);
+        System.out.println(a1);
+        a1.sort(Comparator.comparing(Person::getName));
+        System.out.println(a1);
 
     }
 

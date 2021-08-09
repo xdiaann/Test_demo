@@ -1,6 +1,7 @@
 package 尚硅谷面试;
 
-public class StringPool58Demo {
+//判断true or false
+public class StringPool_intern {
     public static void main(String[] args) {
         String str1 = new StringBuilder("58").append("tongcheng").toString();
 
