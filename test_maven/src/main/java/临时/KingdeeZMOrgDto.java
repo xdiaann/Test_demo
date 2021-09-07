@@ -1,3 +1,5 @@
+package 临时;
+
 import iinda.pojo.BaseDto;
 import lombok.Getter;
 import lombok.Setter;

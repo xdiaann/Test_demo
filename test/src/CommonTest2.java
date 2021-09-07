@@ -1,5 +1,6 @@
 import org.junit.Test;
 
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -19,6 +20,7 @@ public class CommonTest2 {
         c.add(Calendar.HOUR_OF_DAY, -1);
         String t = sdf.format(c.getTime());
         System.out.println(t);
+
     }
 
     @Test
@@ -57,6 +59,8 @@ public class CommonTest2 {
         System.out.println(1 << 8);
         System.out.println(32 >>> 2);
         System.out.println(32 >> 2);
+        String separator = File.separator;
+        System.out.println(separator);
     }
 
     @Test

@@ -1,6 +1,8 @@
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.aliyun.facebody20191230.models.CompareFaceRequest;
+import com.aliyun.facebody20191230.models.CompareFaceResponse;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.google.common.collect.Lists;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
@@ -20,17 +22,20 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.jsoup.Jsoup;
 import org.junit.Test;
+import sun.misc.BASE64Encoder;
+import 临时.KingdeeZMOrgDto;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
+import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.net.URL;
+import java.text.ParseException;
 import java.util.*;
 import java.util.concurrent.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author MR.Z
@@ -90,7 +95,6 @@ public class CommonTest {
 
     @Test
     public void test5() {
-
 
     }
 
@@ -179,8 +183,6 @@ public class CommonTest {
         //        bufferImg = ImageIO.read(new File("D:/test.jpg"));
 
         ByteArrayOutputStream byteArrayOut = new ByteArrayOutputStream();
-
-
         //这里要注意formatName要缓存后缀名
         ImageIO.write(bufferImg, suffix, byteArrayOut);
 
@@ -222,44 +224,28 @@ public class CommonTest {
     public static void main(String[] args) {
 
         RpcService rpcService = new RpcService();
-
         HttpService httpService = new HttpService();
-
         Future<Map<String, String>> future1 = null;
-
         Future<Integer> future2 = null;
 
         try {
-
             future1 = executor.submit(() -> rpcService.getRpcResult());
-
             future2 = executor.submit(() -> httpService.getHttpResult());
-
             //耗时10ms
-
             Map<String, String> result1 = future1.get(300, TimeUnit.MILLISECONDS);
-
             //耗时20ms
-
             Integer result2 = future2.get(300, TimeUnit.MILLISECONDS);
             System.out.println(result2);
 
             //总耗时20ms
 
         } catch (Exception e) {
-
             if (future1 != null) {
-
                 future1.cancel(true);
-
             }
-
             if (future2 != null) {
-
                 future2.cancel(true);
-
             }
-
             throw new RuntimeException(e);
 
         }
@@ -433,7 +419,197 @@ public class CommonTest {
         }
     }
 
+    @Test
+    public void test006() throws ParseException {
 
+        List<KingdeeZMOrgDto> kingdeeZMOrgDtos = new ArrayList<>();
+        KingdeeZMOrgDto kingdeeZMOrgDto = new KingdeeZMOrgDto();
+        kingdeeZMOrgDto.setDeptCode("1");
+        KingdeeZMOrgDto kingdeeZMOrgDto1 = new KingdeeZMOrgDto();
+        kingdeeZMOrgDto1.setDeptCode("2");
+        kingdeeZMOrgDtos.add(kingdeeZMOrgDto);
+        kingdeeZMOrgDtos.add(kingdeeZMOrgDto1);
+
+        String s = JSON.toJSONString(kingdeeZMOrgDtos);
+        System.out.println(s);
+
+    }
+
+    @Test
+    public void test007() {
+        Pattern pattern = Pattern.compile("\\{([^\\}]+)\\}");
+        String answerStr1 = "医疗器械使用单位之间转让在用医疗器械，转让方应当确保所转让的医疗器械安全、有效，｛不得转让过期｝、失效、淘汰以及｛检验不合格的｝医疗器械。\n";
+        Matcher matcher = pattern.matcher(answerStr1);
+        String answerStr = "";
+        while (matcher.find()) {
+            String t = matcher.group(1);
+            answerStr += t + "|";
+        }
+        String cellValue = answerStr.substring(0, answerStr.length() - 1);
+        String s = answerStr1.replaceAll("\\{[^}]*\\}", "()");
+        System.out.println(s);
+//        String substring = answerStr.substring(0, answerStr.length() - 1);
+//        System.out.println(substring);
+    }
+
+    @Test
+    public void test008() throws Exception {
+        com.aliyun.facebody20191230.Client client = null;
+        try {
+            client = Sample.createClient("HEdKcHfTH9xCldsb", "m68wa2BdfNQfswrk5D5uRaUWGNp7rx");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        List<ExamPhotoDto> activePhotos = new ArrayList<>();
+        ExamPhotoDto examPhotoDto = new ExamPhotoDto();
+        examPhotoDto.setActiveId("1");
+        examPhotoDto.setRegisterId("1");
+        examPhotoDto.setUserId("1");
+        examPhotoDto.setPhoto64("1231");
+        examPhotoDto.setExamTime(new BigDecimal(1));
+        examPhotoDto.setExamRegisterPhotoId("1");
+        ExamPhotoDto examPhotoDto2 = new ExamPhotoDto();
+        examPhotoDto2.setActiveId("1");
+        examPhotoDto2.setRegisterId("1");
+        examPhotoDto2.setUserId("1");
+        examPhotoDto2.setPhoto64(null);
+        examPhotoDto2.setExamTime(new BigDecimal(1));
+        examPhotoDto2.setExamRegisterPhotoId("6");
+        ExamPhotoDto examPhotoDto3 = new ExamPhotoDto();
+        examPhotoDto3.setActiveId("1");
+        examPhotoDto3.setRegisterId("1");
+        examPhotoDto3.setUserId("1");
+        examPhotoDto3.setPhoto64("1231");
+        examPhotoDto3.setExamTime(new BigDecimal(1));
+        examPhotoDto3.setExamRegisterPhotoId("7");
+        ExamPhotoDto examPhotoDto4 = new ExamPhotoDto();
+        examPhotoDto4.setActiveId("1");
+        examPhotoDto4.setRegisterId("2");
+        examPhotoDto4.setUserId("1");
+        examPhotoDto4.setPhoto64("313");
+        examPhotoDto4.setExamTime(new BigDecimal(2));
+        examPhotoDto4.setExamRegisterPhotoId("4");
+        ExamPhotoDto examPhotoDto5 = new ExamPhotoDto();
+        examPhotoDto5.setActiveId("2");
+        examPhotoDto5.setRegisterId("3");
+        examPhotoDto5.setUserId("3");
+        examPhotoDto5.setPhoto64("123");
+        examPhotoDto5.setExamRegisterPhotoId("3");
+        examPhotoDto5.setExamTime(new BigDecimal(1));
+        ExamPhotoDto examPhotoDto6 = new ExamPhotoDto();
+        examPhotoDto6.setActiveId("1");
+        examPhotoDto6.setRegisterId("5");
+        examPhotoDto6.setUserId("1");
+        examPhotoDto6.setPhoto64("231");
+        examPhotoDto6.setExamRegisterPhotoId("5");
+        examPhotoDto6.setExamTime(new BigDecimal(3));
+        activePhotos.add(examPhotoDto);
+        activePhotos.add(examPhotoDto2);
+        activePhotos.add(examPhotoDto3);
+        activePhotos.add(examPhotoDto4);
+        activePhotos.add(examPhotoDto5);
+        activePhotos.add(examPhotoDto6);
+        Map<String, Map<String, String>> map = new HashMap<>();
+        String pic_path = "C:\\Users\\mrzhang\\Desktop\\微信图片_20210906115528.jpg";//本地图片的路径
+        String pic_path1 = "C:\\Users\\mrzhang\\Desktop\\微信截图_20210906122433.png";//本地图片的路径
+        String pic_path2 = "C:\\Users\\mrzhang\\Desktop\\微信图片_20210906122716.jpg";//本地图片的路径
+
+        File picBase64 = new File(pic_path);
+        File picBase641 = new File(pic_path1);
+        File picBase642 = new File(pic_path2);
+            String pic = encodeImageToBase64(picBase64);
+            String pic1 = encodeImageToBase64(picBase641);
+            String pic2 = encodeImageToBase64(picBase642);
+            String data = pic.replaceAll("[\\s*\t\n\r]", "");
+            String data1 = pic1.replaceAll("[\\s*\t\n\r]", "");
+            String data2 = pic2.replaceAll("[\\s*\t\n\r]", "");
+        for (ExamPhotoDto activePhoto : activePhotos) {
+            if (StringUtils.isBlank(activePhoto.getPhoto64())) {
+                continue;
+            }
+            String key = activePhoto.getRegisterId() + "_" + activePhoto.getUserId();
+            if (map.containsKey(key)) {
+                map.get(key).put(activePhoto.getExamRegisterPhotoId(), activePhoto.getPhoto64());
+            } else {
+                Map<String, String> mapInside = new HashMap<>();
+                mapInside.put(activePhoto.getExamRegisterPhotoId(), activePhoto.getPhoto64());
+                map.put(key, mapInside);
+            }
+        }
+        int count = 0;
+        Set<Map.Entry<String, Map<String, String>>> entries = map.entrySet();
+        for (Map.Entry<String, Map<String, String>> entry : entries) {
+            if (entry.getValue().size() < 2) {
+                continue;
+            }
+            Map<String, String> value = entry.getValue();
+//            String s = value.get(new BigDecimal(1));
+            Set<Map.Entry<String, String>> entrySet = value.entrySet();
+
+            boolean isPhotoError = false;
+            Map.Entry<String, String> stringStringEntry = value.entrySet().stream().findFirst().get();
+            if (StringUtils.isBlank(stringStringEntry.getValue())) {
+                continue;
+            }
+            String key2 = stringStringEntry.getKey();
+            String value1 = stringStringEntry.getValue();
+            value1 = value1.substring(value1.indexOf(",") + 1);
+            CompareFaceRequest compareFaceRequest = new CompareFaceRequest();
+//            compareFaceRequest.setImageDataA(value1.getBytes());//第一次拍的的图片
+            compareFaceRequest.setImageDataA(data.getBytes());//第一次拍的的图片
+            for (Map.Entry<String, String> innerEntry : entrySet) {
+                String key = innerEntry.getKey();
+                if (key.equals(key2)) {
+                    continue;
+                }
+                String photo64 = innerEntry.getValue();
+                if (StringUtils.isBlank(photo64)  ) {
+                    continue;
+                }
+                photo64 = photo64.substring(photo64.indexOf(",") + 1);
+                compareFaceRequest.setImageDataB(photo64.getBytes());
+                CompareFaceResponse compareFaceResponse = null;
+                try {
+                    compareFaceResponse = client.compareFace(compareFaceRequest);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                Float confidence = compareFaceResponse.getBody().data.confidence;
+                //相似值大于61即视为为同一人
+                isPhotoError = confidence < 61;
+                if (isPhotoError) {
+                    break;
+                }
+            }
+            String key1 = entry.getKey();
+//            String substring = key1.substring(0, key1.indexOf("_"));
+//            ExamRegisterEntity one = examRegisterRepository.findOne(substring);
+//            one.setIsPhotoError(isPhotoError);
+//            examRegisterRepository.saveAndFlush(one);
+            count++;
+        }
+    }
+
+    public static String encodeImageToBase64(File file) throws Exception {
+        //将图片文件转化为字节数组字符串，并对其进行Base64编码处理
+//        loggerger.info("图片的路径为:" + file.getAbsolutePath());
+        InputStream in = null;
+        byte[] data = null;
+        //读取图片字节数组
+        try {
+            in = new FileInputStream(file);
+            data = new byte[in.available()];
+            in.read(data);
+            in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new Exception("图片上传失败,请联系客服!");
+        }
+        //对字节数组Base64编码
+        BASE64Encoder encoder = new BASE64Encoder();
+        String base64 = encoder.encode(data);
+        return base64;//返回Base64编码过的字节数组字符串
+    }
 }
 
 

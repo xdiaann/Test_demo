@@ -1,3 +1,4 @@
+import com.sun.deploy.util.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import 深浅克隆.浅克隆.Person;
@@ -954,31 +955,12 @@ public class CommonTest {
     }
     @Test
     public void test048()  {
-        LmsConsts.QuestionType[] types
-                = new LmsConsts.QuestionType[]{LmsConsts.QuestionType.SINGLE
-                ,LmsConsts.QuestionType.MULTISELECT
-                ,LmsConsts.QuestionType.MULTI
-                ,LmsConsts.QuestionType.JUDGE
-                ,LmsConsts.QuestionType.FILL
-                ,LmsConsts.QuestionType.QUESTION};
-
-        Map<LmsConsts.QuestionType, List<Person>> map = new LinkedHashMap<>();
-        List<Person> a = new ArrayList<>();
-        a.add(new Person("1", 1, "1", "1"));
-        a.add(new Person("2", 2, "2", "2"));
-        a.add(new Person("3", 3, "3", "3"));
-        map.put(LmsConsts.QuestionType.SINGLE,a);
-
-
-        Map<LmsConsts.QuestionType, List<Person>> map1 = new LinkedHashMap<>();
-        List<Person> a1 = new ArrayList<>();
-        a1.add(new Person("3", 1, "1", "1"));
-        a1.add(new Person("2", 2, "2", "2"));
-        a1.add(new Person("1", 3, "3", "3"));
-        map1.put(LmsConsts.QuestionType.SINGLE, a1);
-        System.out.println(a1);
-        a1.sort(Comparator.comparing(Person::getName));
-        System.out.println(a1);
+        String format = new SimpleDateFormat().format(new Date());
+        System.out.println(format);
+        String str1 = null;
+        String str2 = null;
+        boolean b = str1 == null ? str2 == null : str1.equals(str2);
+        System.out.println(b);
 
     }
 
