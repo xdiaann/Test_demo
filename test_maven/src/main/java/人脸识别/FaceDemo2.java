@@ -1,7 +1,10 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+package 人脸识别;
+
+import sun.misc.BASE64Encoder;
+
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
@@ -9,23 +12,8 @@ import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-import javax.crypto.spec.SecretKeySpec;
-import com.aliyun.tea.*;
-import com.aliyun.facebody20191230.*;
-import com.aliyun.facebody20191230.models.*;
-import com.aliyun.teaopenapi.*;
-import com.aliyun.teaopenapi.models.*;
-import com.aliyun.teaopenapi.Client;
-import com.aliyun.teaopenapi.models.Config;
-import com.aliyuncs.facebody.model.v20191230.AddFaceRequest;
-import sun.misc.BASE64Encoder;
-import javax.crypto.Mac;
 
-//@SuppressWarnings("restriction")
-public class FaceDemo1 {
-    /*
-     * 计算MD5+BASE64
-     */
+public class FaceDemo2 {
     public static String MD5Base64(String s) {
         if (s == null)
             return null;
@@ -83,6 +71,9 @@ public class FaceDemo1 {
             String method = "POST";
             String accept = "application/json";
             String content_type = "application/json";
+
+//            String content_type = "application/octet-stream";
+
             String path = realUrl.getFile();
             String date = toGMTString(new Date());
             // 1.对body做MD5+BASE64加密
@@ -154,6 +145,8 @@ public class FaceDemo1 {
             String method = "GET";
             String accept = "application/json";
             String content_type = "application/json";
+
+//            String content_type = "application/octet-stream";
             String path = realUrl.getFile();
             String date = toGMTString(new Date());
             // 1.对body做MD5+BASE64加密
@@ -200,16 +193,50 @@ public class FaceDemo1 {
         }
         return result;
     }
-//    public static void main(String[] args) throws Exception {
-//        // 发送POST请求示例
-//        System.out.println("");
-//        String ak_id = "LTAI5tK4PPmoZkRXeso9AuS1"; //用户ak
-//        String ak_secret = "iarHuTywt96g1Kuduau2V63ifySrCT"; // 用户ak_secret
-//        String url = "https://dtplus-cn-shanghai.data.aliyuncs.com/face/attribute";
-//        String body = "{\"type\": \"1\", \"image_url\":\"https://image.baidu.com/search/detail?ct=503316480&z=undefined&tn=baiduimagedetail&ipn=d&word=www.baidu%20com&step_word=&ie=utf-8&in=&cl=2&lm=-1&st=undefined&hd=undefined&latest=undefined&copyright=undefined&cs=860408836,2964847022&os=2234945093,3136735300&simid=0,0&pn=1&rn=1&di=119240&ln=1190&fr=&fmq=1630863460465_R&fm=&ic=undefined&s=undefined&se=&sme=&tab=0&width=undefined&height=undefined&face=undefined&is=0,0&istype=0&ist=&jit=&bdtype=0&spn=0&pi=0&gsm=0&objurl=https%3A%2F%2Fgimg2.baidu.com%2Fimage_search%2Fsrc%3Dhttp%253A%252F%252Fhbimg.b0.upaiyun.com%252F427b4c426408ae57537b872a2acd3d93dec414db7fea1-Ywkpnq_fw658%26refer%3Dhttp%253A%252F%252Fhbimg.b0.upaiyun.com%26app%3D2002%26size%3Df9999%2C10000%26q%3Da80%26n%3D0%26g%3D0n%26fmt%3Djpeg%3Fsec%3D1633455461%26t%3D097ee4862d44729c4550c6f0d5248f6a&rpstart=0&rpnum=0&adpicid=0&nojc=undefined\"}";
-//        System.out.println("response body:" + sendPost(url, body, ak_id, ak_secret));
-//
-//
-//    }
+    public static void main(String[] args) throws Exception {
+        // 发送POST请求示例
+        String ak_id = "******"; //用户ak
+        String ak_secret = "******"; // 用户ak_secret
+        String url = "https://dtplus-cn-shanghai.data.aliyuncs.com/face/attribute";
 
+        //上传本地图片
+        // Request body
+        String pic_path = "C:\\Users\\****\\Desktop\\timg.jpg";//本地图片的路径
+
+        File picBase64 = new File(pic_path);
+        String pic = encodeImageToBase64(picBase64);
+        //提出base64编码的换行符问题
+        String data = pic.replaceAll("[\\s*\t\n\r]", "");
+        data = "'" + data + "'";
+        String body = "{\"type\": "+1+", \"content\": "+data+"}";
+        System.out.println("response body:" + sendPost(url, body, ak_id, ak_secret));
+    }
+
+    /**
+     * 将本地图片编码为base64
+     *
+     * @param file
+     * @return
+     * @throws Exception
+     */
+    public static String encodeImageToBase64(File file) throws Exception {
+        //将图片文件转化为字节数组字符串，并对其进行Base64编码处理
+//        loggerger.info("图片的路径为:" + file.getAbsolutePath());
+        InputStream in = null;
+        byte[] data = null;
+        //读取图片字节数组
+        try {
+            in = new FileInputStream(file);
+            data = new byte[in.available()];
+            in.read(data);
+            in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new Exception("图片上传失败,请联系客服!");
+        }
+        //对字节数组Base64编码
+        BASE64Encoder encoder = new BASE64Encoder();
+        String base64 = encoder.encode(data);
+        return base64;//返回Base64编码过的字节数组字符串
+    }
 }

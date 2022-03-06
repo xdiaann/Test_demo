@@ -20,8 +20,8 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.jsoup.Jsoup;
 import org.junit.Test;
+
 import sun.misc.BASE64Encoder;
 import 临时.KingdeeZMOrgDto;
 
@@ -352,37 +352,6 @@ public class CommonTest {
         System.out.println(bigDecimal);
     }
 
-    @Test
-    public void test004() {
-//        String input = "[null]";
-//        List array = JSON.parseArray(input);
-//        for (Object o : array) {
-//            if (o == null) {
-//                System.out.println(1);
-//            }
-//        }
-
-        JSONArray jsonArray = new JSONArray();
-        jsonArray.add(0, null);
-        jsonArray.add(1, null);
-        String s = jsonArray.toString();
-        if (s.equals("[null]")) {
-            System.out.println(1);
-        }
-        System.out.println(s);
-        if (jsonArray.isEmpty()) {
-            System.out.println(3123123);
-        }
-        if (jsonArray.toString() != null && !"".equals(jsonArray.toString())) {
-            System.out.println(3123123);
-        }
-        String text = Jsoup.parse("1").text();
-        System.out.println(text);
-        boolean blank = StringUtils.isBlank(null);
-        System.out.println(blank);
-        boolean notEmpty = StringUtils.isBlank(" ");
-        System.out.println(notEmpty);
-    }
 
     @Test
     public void test005() throws Exception {
@@ -452,143 +421,6 @@ public class CommonTest {
 //        System.out.println(substring);
     }
 
-    @Test
-    public void test008() throws Exception {
-        com.aliyun.facebody20191230.Client client = null;
-        try {
-            client = Sample.createClient("HEdKcHfTH9xCldsb", "m68wa2BdfNQfswrk5D5uRaUWGNp7rx");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        List<ExamPhotoDto> activePhotos = new ArrayList<>();
-        ExamPhotoDto examPhotoDto = new ExamPhotoDto();
-        examPhotoDto.setActiveId("1");
-        examPhotoDto.setRegisterId("1");
-        examPhotoDto.setUserId("1");
-        examPhotoDto.setPhoto64("1231");
-        examPhotoDto.setExamTime(new BigDecimal(1));
-        examPhotoDto.setExamRegisterPhotoId("1");
-        ExamPhotoDto examPhotoDto2 = new ExamPhotoDto();
-        examPhotoDto2.setActiveId("1");
-        examPhotoDto2.setRegisterId("1");
-        examPhotoDto2.setUserId("1");
-        examPhotoDto2.setPhoto64(null);
-        examPhotoDto2.setExamTime(new BigDecimal(1));
-        examPhotoDto2.setExamRegisterPhotoId("6");
-        ExamPhotoDto examPhotoDto3 = new ExamPhotoDto();
-        examPhotoDto3.setActiveId("1");
-        examPhotoDto3.setRegisterId("1");
-        examPhotoDto3.setUserId("1");
-        examPhotoDto3.setPhoto64("1231");
-        examPhotoDto3.setExamTime(new BigDecimal(1));
-        examPhotoDto3.setExamRegisterPhotoId("7");
-        ExamPhotoDto examPhotoDto4 = new ExamPhotoDto();
-        examPhotoDto4.setActiveId("1");
-        examPhotoDto4.setRegisterId("2");
-        examPhotoDto4.setUserId("1");
-        examPhotoDto4.setPhoto64("313");
-        examPhotoDto4.setExamTime(new BigDecimal(2));
-        examPhotoDto4.setExamRegisterPhotoId("4");
-        ExamPhotoDto examPhotoDto5 = new ExamPhotoDto();
-        examPhotoDto5.setActiveId("2");
-        examPhotoDto5.setRegisterId("3");
-        examPhotoDto5.setUserId("3");
-        examPhotoDto5.setPhoto64("123");
-        examPhotoDto5.setExamRegisterPhotoId("3");
-        examPhotoDto5.setExamTime(new BigDecimal(1));
-        ExamPhotoDto examPhotoDto6 = new ExamPhotoDto();
-        examPhotoDto6.setActiveId("1");
-        examPhotoDto6.setRegisterId("5");
-        examPhotoDto6.setUserId("1");
-        examPhotoDto6.setPhoto64("231");
-        examPhotoDto6.setExamRegisterPhotoId("5");
-        examPhotoDto6.setExamTime(new BigDecimal(3));
-        activePhotos.add(examPhotoDto);
-        activePhotos.add(examPhotoDto2);
-        activePhotos.add(examPhotoDto3);
-        activePhotos.add(examPhotoDto4);
-        activePhotos.add(examPhotoDto5);
-        activePhotos.add(examPhotoDto6);
-        Map<String, Map<String, String>> map = new HashMap<>();
-        String pic_path = "C:\\Users\\mrzhang\\Desktop\\微信图片_20210906115528.jpg";//本地图片的路径
-        String pic_path1 = "C:\\Users\\mrzhang\\Desktop\\微信截图_20210906122433.png";//本地图片的路径
-        String pic_path2 = "C:\\Users\\mrzhang\\Desktop\\微信图片_20210906122716.jpg";//本地图片的路径
-
-        File picBase64 = new File(pic_path);
-        File picBase641 = new File(pic_path1);
-        File picBase642 = new File(pic_path2);
-            String pic = encodeImageToBase64(picBase64);
-            String pic1 = encodeImageToBase64(picBase641);
-            String pic2 = encodeImageToBase64(picBase642);
-            String data = pic.replaceAll("[\\s*\t\n\r]", "");
-            String data1 = pic1.replaceAll("[\\s*\t\n\r]", "");
-            String data2 = pic2.replaceAll("[\\s*\t\n\r]", "");
-        for (ExamPhotoDto activePhoto : activePhotos) {
-            if (StringUtils.isBlank(activePhoto.getPhoto64())) {
-                continue;
-            }
-            String key = activePhoto.getRegisterId() + "_" + activePhoto.getUserId();
-            if (map.containsKey(key)) {
-                map.get(key).put(activePhoto.getExamRegisterPhotoId(), activePhoto.getPhoto64());
-            } else {
-                Map<String, String> mapInside = new HashMap<>();
-                mapInside.put(activePhoto.getExamRegisterPhotoId(), activePhoto.getPhoto64());
-                map.put(key, mapInside);
-            }
-        }
-        int count = 0;
-        Set<Map.Entry<String, Map<String, String>>> entries = map.entrySet();
-        for (Map.Entry<String, Map<String, String>> entry : entries) {
-            if (entry.getValue().size() < 2) {
-                continue;
-            }
-            Map<String, String> value = entry.getValue();
-//            String s = value.get(new BigDecimal(1));
-            Set<Map.Entry<String, String>> entrySet = value.entrySet();
-
-            boolean isPhotoError = false;
-            Map.Entry<String, String> stringStringEntry = value.entrySet().stream().findFirst().get();
-            if (StringUtils.isBlank(stringStringEntry.getValue())) {
-                continue;
-            }
-            String key2 = stringStringEntry.getKey();
-            String value1 = stringStringEntry.getValue();
-            value1 = value1.substring(value1.indexOf(",") + 1);
-            CompareFaceRequest compareFaceRequest = new CompareFaceRequest();
-//            compareFaceRequest.setImageDataA(value1.getBytes());//第一次拍的的图片
-            compareFaceRequest.setImageDataA(data.getBytes());//第一次拍的的图片
-            for (Map.Entry<String, String> innerEntry : entrySet) {
-                String key = innerEntry.getKey();
-                if (key.equals(key2)) {
-                    continue;
-                }
-                String photo64 = innerEntry.getValue();
-                if (StringUtils.isBlank(photo64)  ) {
-                    continue;
-                }
-                photo64 = photo64.substring(photo64.indexOf(",") + 1);
-                compareFaceRequest.setImageDataB(photo64.getBytes());
-                CompareFaceResponse compareFaceResponse = null;
-                try {
-                    compareFaceResponse = client.compareFace(compareFaceRequest);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                Float confidence = compareFaceResponse.getBody().data.confidence;
-                //相似值大于61即视为为同一人
-                isPhotoError = confidence < 61;
-                if (isPhotoError) {
-                    break;
-                }
-            }
-            String key1 = entry.getKey();
-//            String substring = key1.substring(0, key1.indexOf("_"));
-//            ExamRegisterEntity one = examRegisterRepository.findOne(substring);
-//            one.setIsPhotoError(isPhotoError);
-//            examRegisterRepository.saveAndFlush(one);
-            count++;
-        }
-    }
 
     public static String encodeImageToBase64(File file) throws Exception {
         //将图片文件转化为字节数组字符串，并对其进行Base64编码处理
