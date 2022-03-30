@@ -1,4 +1,4 @@
-package responseResult;
+package 其他.responseResult;
 
 /**
  * @author MR.Z

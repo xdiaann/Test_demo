@@ -1,4 +1,4 @@
-package ReentrantLock;
+package 尚硅谷面试.ReentrantLock;
 
 import java.util.concurrent.locks.ReentrantLock;
 
