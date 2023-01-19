@@ -11,8 +11,8 @@ public class TestSingleton {
         Singleton_EH singleton_eh = Singleton_EH.INSTANCE;
         System.out.println(singleton_eh);
 
-        Singleton_EH singletonWithEnum = Singleton_EH.INSTANCE;
-        System.out.println(singletonWithEnum);
+        Singleton_EH singleton_eh1 = Singleton_EH.INSTANCE;
+        System.out.println(singleton_eh1);
 
         Singleton_LH singleton_lh1 = Singleton_LH.getInstance();
         Singleton_LH singleton_lh2 = Singleton_LH.getInstance();
@@ -36,6 +36,10 @@ public class TestSingleton {
         System.out.println(singleton_lh4);
         System.out.println(singleton_lh1);
         executorService.shutdown();
+
+        SingletonDemo singletonDemo = SingletonDemo.getInstance();
+        SingletonDemo singletonDemo2 = SingletonDemo.getInstance();
+        System.out.println(singletonDemo == singletonDemo2);
 
     }
 }

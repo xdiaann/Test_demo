@@ -1,22 +1,23 @@
 package 多态;
 
 
+import javax.swing.*;
+
 //多态的一个作用体现
 public class AnimalTest {
     public static void main(String[] args) {
-        AnimalTest animalTest = new AnimalTest();
-        animalTest.method(new dog());
-        animalTest.method(new cat());
+        method(new dog());
+        method(new cat());
 
     }
 
-    public void method(Animal animal) {
+    public static void method(Animal animal) {
         animal.eat();
         animal.sleep();
     }
 }
 
-class Animal {
+class Animal  {
     public void eat() {
         System.out.println("chi");
     }

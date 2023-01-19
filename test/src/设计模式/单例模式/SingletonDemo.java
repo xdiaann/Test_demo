@@ -8,7 +8,7 @@ public class SingletonDemo {
     // DCL 双重接近完美 但是考虑倒指令重排下 可以考虑加volatile
     private static /*volatile*/ SingletonDemo instance = null;
 
-    public SingletonDemo() {
+    private SingletonDemo() {
         System.out.println(Thread.currentThread().getName()+"\t 我是构造方法SingletonDemo");
     }
 
