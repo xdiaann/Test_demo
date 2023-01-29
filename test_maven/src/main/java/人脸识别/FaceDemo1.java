@@ -204,9 +204,9 @@ public class FaceDemo1 {
     }
 //    public static void main(String[] args) throws Exception {
 //        // 发送POST请求示例
-//        System.out.println("");
-//        String ak_id = "LTAI5tK4PPmoZkRXeso9AuS1"; //用户ak
-//        String ak_secret = "iarHuTywt96g1Kuduau2V63ifySrCT"; // 用户ak_secret
+//        System.out.println("");xxx
+//        String ak_id = ""; //用户ak
+//        String ak_secret = "xxx"; // 用户ak_secret
 //        String url = "https://dtplus-cn-shanghai.data.aliyuncs.com/face/attribute";
 //        String body = "{\"type\": \"1\", \"image_url\":\"https://image.baidu.com/search/detail?ct=503316480&z=undefined&tn=baiduimagedetail&ipn=d&word=www.baidu%20com&step_word=&ie=utf-8&in=&cl=2&lm=-1&st=undefined&hd=undefined&latest=undefined&copyright=undefined&cs=860408836,2964847022&os=2234945093,3136735300&simid=0,0&pn=1&rn=1&di=119240&ln=1190&fr=&fmq=1630863460465_R&fm=&ic=undefined&s=undefined&se=&sme=&tab=0&width=undefined&height=undefined&face=undefined&is=0,0&istype=0&ist=&jit=&bdtype=0&spn=0&pi=0&gsm=0&objurl=https%3A%2F%2Fgimg2.baidu.com%2Fimage_search%2Fsrc%3Dhttp%253A%252F%252Fhbimg.b0.upaiyun.com%252F427b4c426408ae57537b872a2acd3d93dec414db7fea1-Ywkpnq_fw658%26refer%3Dhttp%253A%252F%252Fhbimg.b0.upaiyun.com%26app%3D2002%26size%3Df9999%2C10000%26q%3Da80%26n%3D0%26g%3D0n%26fmt%3Djpeg%3Fsec%3D1633455461%26t%3D097ee4862d44729c4550c6f0d5248f6a&rpstart=0&rpnum=0&adpicid=0&nojc=undefined\"}";
 //        System.out.println("response body:" + sendPost(url, body, ak_id, ak_secret));
