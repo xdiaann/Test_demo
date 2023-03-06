@@ -1,14 +1,11 @@
 package 多态;
 
 
-import javax.swing.*;
-
 //多态的一个作用体现
 public class AnimalTest {
     public static void main(String[] args) {
-        method(new dog());
-        method(new cat());
-
+        method(new Dog());
+        method(new Cat());
     }
 
     public static void method(Animal animal) {
@@ -27,7 +24,7 @@ class Animal  {
     }
 }
 
-class dog extends Animal{
+class Dog extends Animal{
     public void eat() {
         System.out.println("chibaba");
     }
@@ -37,7 +34,7 @@ class dog extends Animal{
     }
 }
 
-class cat extends Animal{
+class Cat extends Animal{
     public void eat() {
         System.out.println("chiyu");
     }

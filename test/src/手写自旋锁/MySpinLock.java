@@ -11,17 +11,17 @@ public class MySpinLock {
 
     AtomicReference<Thread> atomicReference = new AtomicReference<>();
 
-    public void myLock() {
+    public void lock() {
 
         Thread thread = Thread.currentThread();
 
-        System.out.println(  Thread.currentThread().getName()+     " come in" );
+        System.out.println(Thread.currentThread().getName() + " come in");
 
         while (!atomicReference.compareAndSet(null, thread)) {
 
         }
 
-        System.out.println(  Thread.currentThread().getName()+     " locked" );
+        System.out.println(Thread.currentThread().getName() + " locked");
 
     }
 
@@ -31,33 +31,27 @@ public class MySpinLock {
 
         atomicReference.compareAndSet(thread, null);
 
-        System.out.println(  Thread.currentThread().getName()+     " unLock" );
+        System.out.println(Thread.currentThread().getName() + " unLock");
     }
 
     public static void main(String[] args) {
         MySpinLock mySpinLock = new MySpinLock();
-        new Thread(()->
+        new Thread(() ->
         {
-            mySpinLock.myLock();
+            mySpinLock.lock();
             try {
                 TimeUnit.SECONDS.sleep(5);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
             mySpinLock.unLock();
-        },"A").start();
+        }, "A").start();
 
-        try {
-            TimeUnit.SECONDS.sleep(1);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        new Thread(()->
+        new Thread(() ->
         {
-            mySpinLock.myLock();
+            mySpinLock.lock();
 
             mySpinLock.unLock();
-        },"B").start();
+        }, "B").start();
     }
 }
