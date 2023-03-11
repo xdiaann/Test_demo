@@ -23,7 +23,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.Test;
 
 import sun.misc.BASE64Encoder;
-import 临时.KingdeeZMOrgDto;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -388,21 +387,6 @@ public class CommonTest {
         }
     }
 
-    @Test
-    public void test006() throws ParseException {
-
-        List<KingdeeZMOrgDto> kingdeeZMOrgDtos = new ArrayList<>();
-        KingdeeZMOrgDto kingdeeZMOrgDto = new KingdeeZMOrgDto();
-        kingdeeZMOrgDto.setDeptCode("1");
-        KingdeeZMOrgDto kingdeeZMOrgDto1 = new KingdeeZMOrgDto();
-        kingdeeZMOrgDto1.setDeptCode("2");
-        kingdeeZMOrgDtos.add(kingdeeZMOrgDto);
-        kingdeeZMOrgDtos.add(kingdeeZMOrgDto1);
-
-        String s = JSON.toJSONString(kingdeeZMOrgDtos);
-        System.out.println(s);
-
-    }
 
     @Test
     public void test007() {
