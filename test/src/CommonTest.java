@@ -1,7 +1,5 @@
 import com.sun.deploy.util.StringUtils;
-import org.junit.Before;
-import org.junit.Test;
-import 深浅克隆.浅克隆.Person;
+import org.junit.jupiter.api.Test;
 
 import java.io.*;
 import java.lang.reflect.Method;
