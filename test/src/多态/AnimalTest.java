@@ -39,10 +39,47 @@ class Cat extends Animal{
         System.out.println("chiyu");
     }
 
-    public void sleep() {
-        System.out.println("shuigepi");
+//    public void sleep() {
+//        System.out.println("shuigepi");
+//    }
+}
+
+class A {
+    public void Eat(){
+        System.out.println("爱吃大米饭");
+    }
+}
+class B extends A{
+    @Override
+    public void Eat() {
+        System.out.println("爱吃红烧肉");
+    }
+
+    public void Play(){
+        System.out.println("爱玩游戏");
+    }
+}
+class C extends B{
+    @Override
+    public void Play() {
+        System.out.println("爱刷短视频");
     }
 }
 
+class Test_{
+    public static void main(String[] args) {
+        A a=new A();
+        A b=new B();
+        B c=new C();
+
+        a.Eat();   //爱吃大米饭
+        b.Eat();   //爱吃红烧肉
+        //###  b实际上是 A a= new B() 多态不能调用子类独有的方法  ###
+//        b.Play()  会报错
+        //调用父类的->B 的eat
+        c.Eat();    //爱吃红烧肉
+        c.Play();   //爱刷短视频
+    }
+}
 
 

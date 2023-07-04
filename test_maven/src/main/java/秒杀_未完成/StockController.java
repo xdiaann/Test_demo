@@ -1,9 +1,9 @@
-package 秒杀;
+package 秒杀_未完成;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import 秒杀.service.StockService;
+import 秒杀_未完成.service.StockService;
 
 import javax.annotation.Resource;
 

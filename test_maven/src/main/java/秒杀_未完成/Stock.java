@@ -1,4 +1,4 @@
-package 秒杀;
+package 秒杀_未完成;
 
 import java.io.Serializable;
 

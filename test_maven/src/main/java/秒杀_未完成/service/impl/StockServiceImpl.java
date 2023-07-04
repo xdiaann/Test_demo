@@ -1,9 +1,9 @@
-package 秒杀.service.impl;
+package 秒杀_未完成.service.impl;
 
-import 秒杀.dao.StockDao;
-import 秒杀.Stock;
+import 秒杀_未完成.dao.StockDao;
+import 秒杀_未完成.Stock;
 import org.springframework.stereotype.Service;
-import 秒杀.service.StockService;
+import 秒杀_未完成.service.StockService;
 
 import javax.annotation.Resource;
 import java.util.List;

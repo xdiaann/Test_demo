@@ -1,6 +1,6 @@
-package 秒杀.dao;
+package 秒杀_未完成.dao;
 
-import 秒杀.Stock;
+import 秒杀_未完成.Stock;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

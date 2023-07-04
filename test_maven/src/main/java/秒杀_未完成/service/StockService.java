@@ -1,6 +1,6 @@
-package 秒杀.service;
+package 秒杀_未完成.service;
 
-import 秒杀.Stock;
+import 秒杀_未完成.Stock;
 
 import java.util.List;
 

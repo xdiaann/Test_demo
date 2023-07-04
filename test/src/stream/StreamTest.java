@@ -2,10 +2,7 @@ package stream;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
@@ -24,8 +21,7 @@ public class StreamTest {
         personList2.add(new Person("mike", 20));
         personList2.add(new Person("tom", 30));
 //        personList.add(new Person(null, null));
-//        System.out.println(personList);
-        System.out.println("==============================");
+
         //这两种写法一样 lambda 方法引用
 //        personList.forEach(x-> System.out.println(x));
 //        personList.forEach(System.out::println);
@@ -38,42 +34,47 @@ public class StreamTest {
 
     }
 
-    private static void testFilter1(List<Person> students,List<Person> students1) {
-//        students.stream().filter(o1->)
 
-    }
 
     private static void testFilter(List<Person> personList) {
 
         List<Person> personList1 = personList;
-        personList1.stream().filter(person -> "jack".equals(person.getName()));
-        System.out.println("personList1filterjack" + personList1);
+        //保留Name为 jack 的 person 元素
+        List<Person> collect = personList1.stream().filter(person -> "jack".equals(person.getName())).collect(toList());
+        //personList1filterJack[Person{name='jack', age=20}]
+        System.out.println("personList1filterJack" + collect);
         //保留Name为 mike 的 person 元素
+        //personList1filterMike[Person{name='mike', age=25}, Person{name='mike', age=20}]
         personList1 = personList1.stream().filter(s -> "mike".equals(s.getName())).collect(toList());
-        System.out.println("personList1" + personList1);
-        personList1.forEach(x -> System.out.println(x.getName()));//mike mike
-//        personList1.forEach(x -> x.setName("1"));//mike mike
-//        personList1.forEach(x -> {
-//            x.setName("1");
-//            System.out.println(x.getName());
-//        });
         System.out.println("==============================");
-        //下面这两种写法一样
-//        personList1.forEach(x-> System.out.println(x));
+        System.out.println("personList1filterMike" + personList1);
+        System.out.println("==============================");
         personList1.forEach(System.out::println);
         System.out.println("==============================");
         //保留年龄为 20 的 person 元素
         personList = personList.stream().filter(person -> person.getAge() == 20).collect(toList());
+        //personList[Person{name='jack', age=20}, Person{name='mike', age=20}]
         System.out.println("personList" + personList);
         personList.forEach(System.out::println);
 
+    }
 
+    private static void testFilter1(List<Person> students,List<Person> students1) {
+        List<String> collect = students.stream().map(Person::getName).collect(Collectors.toList());
+        System.out.println(collect);//[jack, mike, mike, tom]
+        collect.forEach(System.out::println);
+
+        List<String> name = students.stream().map(s -> "name:" + s.getName()).collect(Collectors.toList());
+        System.out.println(name);//[name:jack, name:mike, name:mike, name:tom]
+        name.forEach(System.out::println);
     }
 
     private static void testMap(List<Person> students) {
-        //在地址前面加上部分信息，只获取地址输出
-        List<String> name = students.stream().map(s -> "name:" + s.getName()).collect(Collectors.toList());
-        name.forEach(System.out::println);
+        //
+        Map<Integer, Person> collect = students.stream().collect(Collectors.toMap(Person::getAge, a -> a));
+        System.out.println("testMap : "+collect);//[jack, mike, mike, tom]
+
+
     }
 
     @Test
