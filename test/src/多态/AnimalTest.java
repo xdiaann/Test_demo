@@ -44,6 +44,9 @@ class Cat extends Animal{
 //    }
 }
 
+/**
+ * 测试多态的特性 子类没有父类的方法时 多态获取不到子类的方法
+ */
 class A {
     public void Eat(){
         System.out.println("爱吃大米饭");
