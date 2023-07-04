@@ -1,3 +1,4 @@
+import CAS和MySql乐观锁实现下单.OrderDo;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -9,6 +10,7 @@ import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.google.gson.Gson;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -23,6 +25,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.Test;
 
 import sun.misc.BASE64Encoder;
+import 秒杀_未完成.Stock;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -282,25 +285,23 @@ public class CommonTest {
         return FUTURE_TASK_EXECUTOR.submit(task);
     }
 
-    @Builder
-    @Data
-    static class UserVO {
-        private String name;
-        private long id;
+
+    @Test
+    public void test001() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+        //### 转换的类必须是public的
+        OrderDo userVO = new OrderDo(1, 1, 1);
+        OrderDo userVO1 = new OrderDo(2, 2, 2);
+        OrderDo userVO2 = new OrderDo(3, 3, 3);
+//        Map map = PropertyUtils.describe(userVO2);
+//        System.out.println(map);
+        List<OrderDo> list = new ArrayList<>();
+        list.add(userVO);
+        list.add(userVO1);
+        list.add(userVO2);
+        List<Map<String, Object>> list1 = listConvert(list);
+        System.out.println(list1);
     }
 
-    //    @Test
-//    public void test001() {
-//        UserVO userVO = new UserVO("1", 1);
-//        UserVO userVO1 = new UserVO("2", 2);
-//        UserVO userVO2 = new UserVO("2", 2);
-//        List<UserVO> list = new ArrayList<>();
-//        list.add(userVO);
-//        list.add(userVO1);
-//        list.add(userVO2);
-//        List<Map<String, Object>> list1 = listConvert(list);
-//        System.out.println(list1);
-//    }
     //list对象转listMap
     public <T> List<Map<String, Object>> listConvert(List<T> list) {
         List<Map<String, Object>> list_map = new ArrayList<>(); // 定义List<Map<String, Object>>数组<br>　　　　　　　　　　// list为外部传进来的list集合

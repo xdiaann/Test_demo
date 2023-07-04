@@ -1,9 +1,12 @@
 package CAS和MySql乐观锁实现下单;
 
+import lombok.AllArgsConstructor;
+
 /**
  * @author MR.Z
  * @date 2020/2/11 1:01
  */
+@AllArgsConstructor
 public class OrderDo {
     private Integer id;
 

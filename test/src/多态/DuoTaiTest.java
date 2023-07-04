@@ -2,7 +2,7 @@ package 多态;
 
 
 //多态的一个作用体现
-public class AnimalTest {
+public class DuoTaiTest {
     public static void main(String[] args) {
         method(new Dog());
         method(new Cat());
@@ -77,11 +77,18 @@ class Test_{
 
         a.Eat();   //爱吃大米饭
         b.Eat();   //爱吃红烧肉
+        B b1 = new B();
+        //通过
+        getEat(b1);   //爱吃红烧肉
         //###  b实际上是 A a= new B() 多态不能调用子类独有的方法  ###
 //        b.Play()  会报错
         //调用父类的->B 的eat
         c.Eat();    //爱吃红烧肉
         c.Play();   //爱刷短视频
+    }
+
+    private static void getEat(A a) {
+        a.Eat();
     }
 }
 
