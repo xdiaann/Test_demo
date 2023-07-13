@@ -28,25 +28,25 @@ public class StreamTest {
         System.out.println("==============================");
         testFilter(personList2);
         System.out.println("==============================");
-        testMap(personList2);
+        testMap1(personList2);
         System.out.println("==============================");
-        testFilter1(personList, personList2);
+        testMap(personList, personList2);
 
     }
-
-
 
     private static void testFilter(List<Person> personList) {
 
         List<Person> personList1 = personList;
+        //filter(T -> boolean)
+        //保留 boolean 为 true 的元素
         //保留Name为 jack 的 person 元素
         List<Person> collect = personList1.stream().filter(person -> "jack".equals(person.getName())).collect(toList());
         //personList1filterJack[Person{name='jack', age=20}]
         System.out.println("personList1filterJack" + collect);
+        System.out.println("==============================");
         //保留Name为 mike 的 person 元素
         //personList1filterMike[Person{name='mike', age=25}, Person{name='mike', age=20}]
         personList1 = personList1.stream().filter(s -> "mike".equals(s.getName())).collect(toList());
-        System.out.println("==============================");
         System.out.println("personList1filterMike" + personList1);
         System.out.println("==============================");
         personList1.forEach(System.out::println);
@@ -59,7 +59,8 @@ public class StreamTest {
 
     }
 
-    private static void testFilter1(List<Person> students,List<Person> students1) {
+    //将某个字段转为list
+    private static void testMap(List<Person> students, List<Person> students1) {
         List<String> collect = students.stream().map(Person::getName).collect(Collectors.toList());
         System.out.println(collect);//[jack, mike, mike, tom]
         collect.forEach(System.out::println);
@@ -69,11 +70,12 @@ public class StreamTest {
         name.forEach(System.out::println);
     }
 
-    private static void testMap(List<Person> students) {
+    private static void testMap1(List<Person> students) {
         //
-        Map<Integer, Person> collect = students.stream().collect(Collectors.toMap(Person::getAge, a -> a));
-        System.out.println("testMap : "+collect);//[jack, mike, mike, tom]
-
+        Map<Integer, Person> collect = students.stream().distinct().collect(Collectors.toMap(Person::getAge, a -> a));
+        System.out.println("testMap : "+collect);
+        int a = 1;
+        short b = 2;
 
     }
 
@@ -82,6 +84,14 @@ public class StreamTest {
         //简单字符串的去重
         List<String> list = Arrays.asList("111", "222", "333", "111", "222");
         list.stream().distinct().forEach(System.out::println);
+
+        List<Integer> numbers = Arrays.asList(3, 2, 2, 3, 7, 3, 5);
+        // 获取对应的平方数
+        //map 方法用于映射每个元素到对应的结果，以下代码片段使用 map 输出了元素对应的平方数：
+        List<Integer> squaresList = numbers.stream().map(i -> i * i).collect(Collectors.toList());
+        System.out.println(squaresList);//[9, 4, 4, 9, 49, 9, 25]
+        List<Integer> squaresList1 = numbers.stream().map(i -> i * i).distinct().collect(Collectors.toList());
+        System.out.println(squaresList1);//[9, 4, 49, 25]
     }
 
     //stream() − 为集合创建串行流。
@@ -99,15 +109,9 @@ public class StreamTest {
         random.ints(0, 10).limit(100).forEach(System.out::println);
     }
 
-    //map 方法用于映射每个元素到对应的结果，以下代码片段使用 map 输出了元素对应的平方数：
     @Test
     public void test12() {
-        List<Integer> numbers = Arrays.asList(3, 2, 2, 3, 7, 3, 5);
-        // 获取对应的平方数
-        List<Integer> squaresList = numbers.stream().map(i -> i * i).collect(Collectors.toList());
-        List<Integer> squaresList1 = numbers.stream().map(i -> i * i).distinct().collect(Collectors.toList());
-        System.out.println(squaresList);//[9, 4, 4, 9, 49, 9, 25]
-        System.out.println(squaresList1);//[9, 4, 49, 25]
+
     }
 
     //filter 方法用于通过设置的条件过滤出元素。以下代码片段使用 filter 方法过滤出空字符串：

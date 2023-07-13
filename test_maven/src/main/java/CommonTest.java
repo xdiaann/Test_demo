@@ -405,6 +405,13 @@ public class CommonTest {
 //        String substring = answerStr.substring(0, answerStr.length() - 1);
 //        System.out.println(substring);
     }
+    @Test
+    public void test008() {
+        List<String> chatWxid = Arrays.asList("1", "2");
+        String text = JSON.toJSONString(chatWxid);
+        JSONObject jsonObject1 = JSONObject.parseObject(text);
+        JSONObject jsonObject = JSON.parseObject(text);
+    }
 
 
     public static String encodeImageToBase64(File file) throws Exception {

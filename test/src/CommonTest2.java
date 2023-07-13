@@ -1,7 +1,4 @@
 import org.junit.Test;
-import 抽象和接口.Dog;
-import 设计模式.工厂模式.Circle;
-import 设计模式.工厂模式.Square;
 
 import java.io.File;
 import java.text.ParseException;
@@ -228,12 +225,7 @@ public class CommonTest2 {
 
     @Test
     public void test16() {
-        String sns = TestEnums.valueOf("SNS").getMessage();
-        System.out.println(sns);
-        String message = TestEnums.MSG.getMessage();
-        System.out.println(message);
-        String name = TestEnums.getMessage("name");
-        System.out.println(name);
+
     }
 
     public static void main(String[] args) {
@@ -266,7 +258,9 @@ public class CommonTest2 {
     }
 
     @Test
-    public void test17() throws InstantiationException, IllegalAccessException {
+    public void test17() {
+        int a = 1;
+        short b = 2;
 
     }
 
