@@ -1,9 +1,16 @@
 import org.junit.Test;
+import org.junit.platform.commons.util.StringUtils;
+import sun.util.resources.LocaleData;
 
 import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 /**
@@ -25,21 +32,9 @@ public class CommonTest2 {
 
     @Test
     public void test02() {
-        List<List<Integer>> DataList = new ArrayList<>();
-        List<Integer> list = new ArrayList<>();
-        list.add(1);
-        list.add(3);
-        list.add(2);
-        list.add(4);
-        DataList.add(list);
-        List<Integer> list2 = new ArrayList<>();
-        list2.add(1);
-        list2.add(2);
-        list2.add(3);
-        list2.add(4);
-        DataList.add(list2);
 
-        System.out.println(DataList);
+
+
     }
 
     @Test
@@ -226,7 +221,34 @@ public class CommonTest2 {
     @Test
     public void test16() {
 
+        String reminderDay = "2023-07-18";
+        Date reminderTime = new Date(); // 假设提醒时间为当前时间（示例）
+
+        LocalDate localDate = LocalDate.parse(reminderDay);
+        LocalTime localTime = LocalDateTime.ofInstant(reminderTime.toInstant(), ZoneId.systemDefault()).toLocalTime();
+
+        LocalDateTime combinedDateTime = LocalDateTime.of(localDate, localTime);
+
+        System.out.println(combinedDateTime);
+        LocalDateTime currentDate = LocalDateTime.now();
+        System.out.println(currentDate);
+        long minute = combinedDateTime.until(currentDate, ChronoUnit.SECONDS) / 60;
+//        long minute = Math.abs(combinedDateTime.until(currentDate, ChronoUnit.SECONDS)) / 60;
+        System.out.println(minute);
+
+
     }
+
+    private static Date convertToDate(LocalDate localDate, int year) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            return sdf.parse(year + "-" + localDate.getMonthValue() + "-" + localDate.getDayOfMonth());
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 
     public static void main(String[] args) {
         //会导致ConcurrentModificationException
@@ -252,7 +274,7 @@ public class CommonTest2 {
         for (int i = 0; i < 30; i++) {
             new Thread(() -> {
                 list2.add(UUID.randomUUID().toString().substring(0, 8));
-                System.out.println(Thread.currentThread().getName()+"\t"+list2);
+                System.out.println(Thread.currentThread().getName() + "\t" + list2);
             }, String.valueOf(i)).start();
         }
     }

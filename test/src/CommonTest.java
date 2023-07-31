@@ -144,6 +144,13 @@ public class CommonTest {
         System.out.println(date);
         String time = sdf.format(date);
         System.out.println(time);
+        try {
+            Date parse = sdf.parse(time);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Date parse1 = null;
+        long time1 = parse1.getTime();
     }
 
     @Test

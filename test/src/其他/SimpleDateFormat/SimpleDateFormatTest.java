@@ -2,13 +2,13 @@ package 其他.SimpleDateFormat;
 
 import lombok.SneakyThrows;
 import org.junit.Test;
+import sun.util.resources.LocaleData;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
@@ -16,7 +16,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 public class SimpleDateFormatTest {
-    private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//    private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     public static String formatDate(Date date) {
         return sdf.format(date);
@@ -25,7 +25,8 @@ public class SimpleDateFormatTest {
     public static Date parse(String strDate) throws ParseException {
         return sdf.parse(strDate);
     }
-
+    private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHH");
+    private static final SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     @SneakyThrows
     public static void main(String[] args) throws ParseException {
 /*        System.out.println(sdf.format(new Date()));
@@ -37,8 +38,7 @@ public class SimpleDateFormatTest {
 //        List<String> lastDay = getLastDay(2019, 2);
 //        System.out.println(lastDay);
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHH");
-        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
 //        Date parse = sdf.parse("2020030400");
 //        String format = sdf1.format(parse);
 //        System.out.println(format);
@@ -47,11 +47,12 @@ public class SimpleDateFormatTest {
         //1 先算出周的时间日期
         //2 得到当前的日期
         //3 用当前的日期-周的日期  如果时间小于9分钟 则 用周的时间加一周 (7天)
-        Calendar  end= Calendar.getInstance();
-        String reminderDay = "2";
-        extracted(end, reminderDay);
+        Calendar end = Calendar.getInstance();
+        String reminderDay = "4";
+//        extracted(end, reminderDay);
+        end.set(Calendar.DAY_OF_WEEK, Integer.parseInt(reminderDay) + 1);
         //时分秒
-        Date reminderTime = sdf1.parse("2023-07-13 17:22:00");
+        Date reminderTime = sdf1.parse("2023-07-13 19:22:00");
         Calendar reminderTimeC = Calendar.getInstance();
         reminderTimeC.setTime(reminderTime);
         int hours = reminderTimeC.get(Calendar.HOUR_OF_DAY);
@@ -63,12 +64,13 @@ public class SimpleDateFormatTest {
         nextRemindTime.set(Calendar.MINUTE, minutes);
         nextRemindTime.set(Calendar.SECOND, seconds);
         Calendar now = Calendar.getInstance();
-        int minute=(int) ((nextRemindTime.getTime().getTime()-now.getTime().getTime())/(60*1000));
+        int minute = (int) ((nextRemindTime.getTime().getTime() - now.getTime().getTime()) / (60 * 1000));
         if (minute < 9) {
             nextRemindTime.add(Calendar.WEEK_OF_MONTH, 1);
         }
         System.out.println(nextRemindTime.getTime());
-
+        nextRemindTime.add(Calendar.WEEK_OF_YEAR, 3);
+        System.out.println(nextRemindTime.getTime());
         Calendar nowTime = Calendar.getInstance();
         nowTime.add(Calendar.MINUTE, 9);
         Calendar nowTime1 = Calendar.getInstance();
@@ -77,10 +79,9 @@ public class SimpleDateFormatTest {
             throw new RuntimeException("设置时间必须大于当前时间9分钟");
         }
         System.out.println("成功");
-        LocalDateTime localDateTime = calcNextRemindTime(1, "1", LocalTime.now());
+        LocalDateTime localDateTime = calcNextRemindTime(0, "1900-01-01", LocalTime.now());
         System.out.println(localDateTime);
     }
-
 
 
     public static LocalDateTime calcNextRemindTime(Integer remindFrequency, String remindDay, LocalTime remindTime) {
@@ -134,30 +135,75 @@ public class SimpleDateFormatTest {
         return remindDateTime;
     }
 
-    private static void extracted(Calendar end, String reminderDay) {
-        switch (reminderDay) {
-            case "1":
-                end.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-                break;
-            case "2":
-                end.set(Calendar.DAY_OF_WEEK, Calendar.TUESDAY);
-                break;
-            case "3":
-                end.set(Calendar.DAY_OF_WEEK, Calendar.THURSDAY);
-                break;
-            case "4":
-                end.set(Calendar.DAY_OF_WEEK, Calendar.WEDNESDAY);
-                break;
-            case "5":
-                end.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY);
-                break;
-            case "6":
-                end.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
-                break;
-            case "7":
-                end.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
-                break;
+    @SneakyThrows
+    @Test
+    public void test03() {
+        int reminderDay = 7; // 假设reminderDay为7，表示星期日
+
+        LocalDate currentDate = LocalDate.now();
+        LocalDate nextReminderDate = currentDate.with(DayOfWeek.of(reminderDay));
+
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String formattedDate = nextReminderDate.format(dateFormatter);
+        System.out.println(formattedDate);
+    }
+
+    @SneakyThrows
+    @Test
+    public void test01() {
+        Calendar end = Calendar.getInstance();
+        String reminderDay = "7";
+//        end.setFirstDayOfWeek(Calendar.MONDAY);
+//        extracted(end, reminderDay);
+        end.set(Calendar.DAY_OF_WEEK, Integer.parseInt(reminderDay) +1);
+        System.out.println(end.getTime());
+        String s1 = String.format("%tY年%<tm月%<td日",end);
+        System.out.println(s1);
+//        end.set(Calendar.MONTH,8);
+        // 获取当前月份的最大日期
+        int maxDayOfMonth = end.getActualMaximum(Calendar.DAY_OF_MONTH);
+
+        // 如果提醒日期大于最大日期，则将其设置为最大日期
+        if (Integer.parseInt(reminderDay) > maxDayOfMonth) {
+            reminderDay = String.valueOf(maxDayOfMonth);
         }
+        end.set(Calendar.DAY_OF_MONTH, Integer.parseInt(reminderDay)  );
+        //时分秒
+        Date reminderTime = sdf1.parse("2023-07-13 19:22:00");
+
+        Calendar calendar = Calendar.getInstance();
+
+
+
+
+        Calendar reminderTimeC = Calendar.getInstance();
+        reminderTimeC.setTime(reminderTime);
+        int hours = reminderTimeC.get(Calendar.HOUR_OF_DAY);
+        int minutes = reminderTimeC.get(Calendar.MINUTE);
+        int seconds = reminderTimeC.get(Calendar.SECOND);
+        LocalDateTime localDateTime = LocalDateTime.ofInstant(end.toInstant(), ZoneOffset.systemDefault());
+        LocalDateTime of = LocalDateTime.of(localDateTime.toLocalDate(), localDateTime.toLocalTime());
+        System.out.println(of);
+        LocalDateTime localDateTime1 = of.plusWeeks(1);
+        long seconds1 = Math.abs(of.until(localDateTime, ChronoUnit.SECONDS));
+        System.out.println(seconds1);
+        Calendar nextRemindTime = Calendar.getInstance();
+        nextRemindTime.setTime(end.getTime());
+        nextRemindTime.set(Calendar.HOUR_OF_DAY, hours);
+        nextRemindTime.set(Calendar.MINUTE, minutes);
+        nextRemindTime.set(Calendar.SECOND, seconds);
+        Calendar now = Calendar.getInstance();
+        int minute = (int) ((nextRemindTime.getTime().getTime() - now.getTime().getTime()) / (60 * 1000));
+        System.out.println(minute);
+    }
+    @SneakyThrows
+    @Test
+    public void test02() {
+        LocalDateTime endTime = LocalDateTime.parse("2023-07-13 23:38:12", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        LocalDateTime beginTime = LocalDateTime.now();
+
+        long seconds = Math.abs(endTime.until(beginTime, ChronoUnit.HOURS));
+        System.out.println(seconds);
     }
 
     public static boolean compTime(String s1, String s2) {
